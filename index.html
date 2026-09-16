@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>✈️ Travel Ideal Type World Cup</title>
+  <meta name="description" content="Discover your perfect travel destination through 10 fun A vs B rounds. Real itinerary, budget & packing list included!"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+/* =============================================
+   ROOT VARIABLES
+============================================= */
+:root {
+  --coral:   #FF6B6B;
+  --orange:  #FF9F43;
+  --gold:    #FFD93D;
+  --emerald: #10B981;
+  --sky:     #38BDF8;
+  --violet:  #8B5CF6;
+  --pink:    #F472B6;
+  --mint:    #34D399;
+  --bg:      #F2F4FF;
+  --white:   #FFFFFF;
+  --dark:    #1A1A3E;
+  --text:    #2B2D5B;
+  --text2:   #6B6E9A;
+  --text3:   #A0A3C4;
+  --border:  #E2E4F0;
+  --shadow:  0 4px 24px rgba(43,45,91,0.08);
+  --shadowL: 0 12px 48px rgba(43,45,91,0.14);
+  --r:       16px;
+  --r2:      24px;
+  --font:    'Outfit', sans-serif;
+  /* card theme A (warm) */
+  --ca1: #FF6B6B; --ca2: #FF9F43;
+  /* card theme B (cool) */
+  --cb1: #38BDF8; --cb2: #34D399;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  line-height:1.6;
+}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:#E2E4F0;}
+::-webkit-scrollbar-thumb{background:#C0C3E0;border-radius:3px;}
+
+/* =============================================
+   SHARED
+============================================= */
+.screen{display:none;}
+.screen.active{display:block;}
+
+.pill{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:999px;
+  font-size:.75rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+}
+.pill-warm{background:rgba(255,107,107,.12);color:var(--coral);border:1px solid rgba(255,107,107,.25);}
+.pill-cool{background:rgba(56,189,248,.12);color:#0284C7;border:1px solid rgba(56,189,248,.25);}
+.pill-violet{background:rgba(139,92,246,.12);color:var(--violet);border:1px solid rgba(139,92,246,.25);}
+.pill-gold{background:rgba(255,217,61,.2);color:#B45309;border:1px solid rgba(255,217,61,.4);}
+
+.btn-main{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:16px 36px;
+  background:linear-gradient(135deg,#FF6B6B,#FF9F43,#FFD93D);
+  color:var(--white);font-family:var(--font);font-weight:800;font-size:1.05rem;
+  border:none;border-radius:999px;cursor:pointer;
+  box-shadow:0 8px 32px rgba(255,107,107,.38);
+  transition:all .3s ease;text-decoration:none;
+}
+.btn-main:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 40px rgba(255,107,107,.5);}
+
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 28px;
+  background:var(--white);color:var(--text2);font-family:var(--font);
+  font-size:.9rem;font-weight:600;
+  border:2px solid var(--border);border-radius:999px;cursor:pointer;
+  transition:all .2s ease;
+}
+.btn-ghost:hover{border-color:#C0C3E0;color:var(--text);background:#F8F9FF;}
+
+/* =============================================
+   BLOB BACKGROUNDS (decorative)
+============================================= */
+.blobs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.blob{
+  position:absolute;border-radius:50%;filter:blur(80px);opacity:.45;
+  animation:blobDrift ease-in-out infinite alternate;
+}
+.blob-1{width:500px;height:500px;background:linear-gradient(135deg,#FFB3B3,#FFD8A8);top:-10%;left:-10%;animation-duration:12s;}
+.blob-2{width:400px;height:400px;background:linear-gradient(135deg,#BAE6FD,#A7F3D0);top:40%;right:-8%;animation-duration:15s;animation-delay:-5s;}
+.blob-3{width:350px;height:350px;background:linear-gradient(135deg,#DDD6FE,#FBCFE8);bottom:-5%;left:30%;animation-duration:18s;animation-delay:-8s;}
+@keyframes blobDrift{
+  0%{transform:translate(0,0) scale(1);}
+  100%{transform:translate(30px,20px) scale(1.08);}
+}
+
+/* =============================================
+   FLOATING EMOJI PARTICLES
+============================================= */
+.particle{
+  position:fixed;pointer-events:none;
+  animation:floatUp linear infinite;z-index:0;opacity:.18;
+}
+@keyframes floatUp{
+  0%{transform:translateY(110vh) rotate(0deg);opacity:0;}
+  10%{opacity:.18;}90%{opacity:.18;}
+  100%{transform:translateY(-80px) rotate(360deg);opacity:0;}
+}
+
+/* =============================================
+   INTRO SCREEN
+============================================= */
+#intro-screen{
+  min-height:100vh;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  padding:40px 20px;
+}
+.intro-inner{
+  position:relative;z-index:2;
+  max-width:640px;width:100%;text-align:center;
+  animation:riseUp .9s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes riseUp{
+  from{opacity:0;transform:translateY(40px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.intro-logo-row{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  margin-bottom:32px;
+}
+.intro-logo-icon{
+  width:56px;height:56px;border-radius:16px;
+  background:linear-gradient(135deg,#FF6B6B,#FF9F43);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;
+  box-shadow:0 8px 24px rgba(255,107,107,.35);
+}
+.intro-logo-text{font-size:1rem;font-weight:700;color:var(--text2);}
+.intro-globe{
+  font-size:7rem;display:block;margin:0 auto 20px;
+  animation:bobRotate 4s ease-in-out infinite;
+  filter:drop-shadow(0 8px 24px rgba(0,0,0,.12));
+}
+@keyframes bobRotate{
+  0%,100%{transform:translateY(0) rotate(-6deg);}
+  50%{transform:translateY(-14px) rotate(6deg);}
+}
+.intro-headline{
+  font-size:clamp(2rem,6vw,3.6rem);
+  font-weight:900;line-height:1.1;margin-bottom:16px;
+}
+.intro-headline span{
+  background:linear-gradient(135deg,#FF6B6B,#FF9F43,#FFD93D 60%,#10B981);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.intro-sub{
+  font-size:1.1rem;color:var(--text2);margin-bottom:36px;
+  max-width:480px;margin-left:auto;margin-right:auto;
+}
+.intro-chips{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+  margin-bottom:40px;
+}
+.chip{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:999px;
+  background:var(--white);border:1px solid var(--border);
+  font-size:.82rem;font-weight:600;color:var(--text2);
+  box-shadow:var(--shadow);
+}
+.chip em{font-style:normal;font-size:1rem;}
+.intro-meta{
+  margin-top:20px;font-size:.8rem;color:var(--text3);
+}
+.intro-meta b{color:var(--text2);}
+
+/* =============================================
+   QUIZ HEADER
+============================================= */
+#quiz-screen{min-height:100vh;padding-bottom:48px;}
+.quiz-nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:12px 24px;
+}
+.qn-inner{
+  max-width:1160px;margin:0 auto;
+  display:flex;align-items:center;gap:16px;
+}
+.qn-logo{
+  display:flex;align-items:center;gap:8px;
+  font-weight:800;font-size:.95rem;white-space:nowrap;color:var(--text);
+  text-decoration:none;
+}
+.qn-logo-icon{
+  width:32px;height:32px;border-radius:10px;
+  background:linear-gradient(135deg,#FF6B6B,#FF9F43);
+  display:flex;align-items:center;justify-content:center;font-size:.9rem;
+}
+.qn-bar-wrap{flex:1;}
+.qn-bar-meta{
+  display:flex;justify-content:space-between;
+  font-size:.75rem;color:var(--text2);margin-bottom:5px;font-weight:600;
+}
+.qn-track{
+  height:8px;background:var(--border);
+  border-radius:999px;overflow:hidden;
+}
+.qn-fill{
+  height:100%;
+  background:linear-gradient(90deg,#FF6B6B,#FF9F43,#FFD93D,#10B981,#38BDF8);
+  background-size:200% 100%;
+  border-radius:999px;
+  transition:width .6s cubic-bezier(.4,0,.2,1);
+  width:0%;
+  animation:shimmerBar 2s linear infinite;
+}
+@keyframes shimmerBar{
+  0%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+.qn-round{
+  white-space:nowrap;
+  background:linear-gradient(135deg,#FF6B6B,#FF9F43);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  font-size:.85rem;font-weight:800;
+}
+
+/* QUIZ BODY */
+.quiz-layout{
+  max-width:1160px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 344px;
+  gap:24px;padding:32px 24px;
+  align-items:start;
+}
+.quiz-main{display:flex;flex-direction:column;gap:28px;}
+
+/* Question header */
+.q-header{text-align:center;}
+.q-cat-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 16px;border-radius:999px;
+  background:var(--white);border:1px solid var(--border);
+  font-size:.75rem;font-weight:700;color:var(--text2);
+  box-shadow:var(--shadow);margin-bottom:14px;
+}
+.q-main-text{
+  font-size:clamp(1.25rem,3vw,1.7rem);
+  font-weight:800;color:var(--dark);line-height:1.3;
+}
+
+/* Choice cards grid */
+.choices-grid{
+  display:grid;grid-template-columns:1fr auto 1fr;
+  gap:0;align-items:stretch;
+}
+/* VS Badge */
+.vs-col{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:0;padding:0 10px;
+}
+.vs-badge{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--white);border:2px solid var(--border);
+  box-shadow:var(--shadow);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;font-weight:900;color:var(--text2);
+  letter-spacing:1px;z-index:1;
+}
+.vs-line-v{
+  flex:1;width:2px;background:linear-gradient(to bottom,transparent,var(--border),transparent);
+}
+
+/* ---- CHOICE CARD ---- */
+.choice-card{
+  background:var(--white);
+  border-radius:28px;
+  overflow:hidden;
+  border:2.5px solid var(--border);
+  cursor:pointer;
+  transition:all .28s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+  box-shadow:var(--shadow);
+  user-select:none;
+  position:relative;
+}
+.choice-card:hover{
+  transform:translateY(-8px);
+  box-shadow:var(--shadowL);
+}
+.card-a:hover{border-color:rgba(255,107,107,.5);}
+.card-b:hover{border-color:rgba(56,189,248,.5);}
+
+.cc-top{
+  padding:36px 24px 28px;
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  position:relative;
+  min-height:220px;
+  justify-content:center;
+}
+.card-a .cc-top{background:linear-gradient(160deg,#FFF5F5,#FFF0E6,#FFFBEB);}
+.card-b .cc-top{background:linear-gradient(160deg,#EFF9FF,#F0FDF9,#F0FEFF);}
+
+/* Big letter badge */
+.cc-letter{
+  position:absolute;top:12px;left:16px;
+  width:32px;height:32px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.82rem;font-weight:900;
+}
+.card-a .cc-letter{background:rgba(255,107,107,.15);color:var(--coral);}
+.card-b .cc-letter{background:rgba(56,189,248,.15);color:#0284C7;}
+
+/* Emoji circle */
+.cc-emoji-wrap{
+  width:90px;height:90px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.8rem;
+  box-shadow:0 6px 24px rgba(0,0,0,.08);
+  position:relative;
+}
+.card-a .cc-emoji-wrap{background:linear-gradient(135deg,#FFE0E0,#FFD0A0);}
+.card-b .cc-emoji-wrap{background:linear-gradient(135deg,#BAE6FD,#A7F3D0);}
+
+.cc-title{
+  font-size:1.15rem;font-weight:800;color:var(--dark);
+  text-align:center;line-height:1.25;
+}
+.cc-desc{
+  font-size:.82rem;color:var(--text2);text-align:center;
+  line-height:1.55;padding:0 8px;
+}
+.cc-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
+.cc-tag{
+  padding:3px 10px;border-radius:999px;font-size:.68rem;font-weight:700;
+  letter-spacing:.3px;
+}
+.card-a .cc-tag{background:rgba(255,107,107,.1);color:#C73E3E;}
+.card-b .cc-tag{background:rgba(56,189,248,.1);color:#0369A1;}
+
+/* Pick button */
+.cc-btn{
+  margin:0;padding:18px 20px;
+  border:none;cursor:pointer;
+  font-family:var(--font);font-size:.9rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:all .2s;
+  letter-spacing:.3px;
+}
+.card-a .cc-btn{
+  background:linear-gradient(135deg,#FF6B6B,#FF9F43);
+  color:white;
+}
+.card-b .cc-btn{
+  background:linear-gradient(135deg,#38BDF8,#34D399);
+  color:white;
+}
+.cc-btn:hover{filter:brightness(1.08);}
+.cc-btn .cb-arrow{font-size:1rem;transition:transform .2s;}
+.choice-card:hover .cb-arrow{transform:translateX(3px);}
+
+/* Selected states */
+.choice-card.winner{
+  border-color:var(--gold)!important;
+  box-shadow:0 0 0 3px rgba(255,217,61,.4),var(--shadowL)!important;
+  animation:winFlash .35s ease;
+}
+@keyframes winFlash{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.03);}
+  100%{transform:scale(1);}
+}
+.choice-card.dimmed{opacity:.45;filter:saturate(.3);}
+
+/* Skip */
+.skip-wrap{text-align:center;}
+.skip-btn{
+  background:none;border:none;cursor:pointer;
+  font-family:var(--font);font-size:.8rem;color:var(--text3);
+  padding:8px 16px;border-radius:8px;transition:color .2s;
+}
+.skip-btn:hover{color:var(--text2);}
+
+/* Cards slide-in */
+.card-a.slide-in{animation:slideFromLeft .4s cubic-bezier(.22,1,.36,1) both;}
+.card-b.slide-in{animation:slideFromRight .4s cubic-bezier(.22,1,.36,1) both;}
+@keyframes slideFromLeft{
+  from{opacity:0;transform:translateX(-36px);}
+  to{opacity:1;transform:translateX(0);}
+}
+@keyframes slideFromRight{
+  from{opacity:0;transform:translateX(36px);}
+  to{opacity:1;transform:translateX(0);}
+}
+
+/* =============================================
+   SIDEBAR
+============================================= */
+.quiz-sidebar{position:sticky;top:90px;}
+.sb-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:var(--r2);
+  padding:24px;
+  box-shadow:var(--shadow);
+}
+.sb-header{margin-bottom:20px;}
+.sb-title{font-size:.95rem;font-weight:800;color:var(--dark);margin-bottom:3px;}
+.sb-sub{font-size:.73rem;color:var(--text3);}
+
+.axis-item{margin-bottom:16px;}
+.axis-heads{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:5px;
+}
+.axis-head{
+  display:flex;align-items:center;gap:4px;
+  font-size:.7rem;font-weight:700;color:var(--text2);
+}
+.axis-track{
+  height:10px;border-radius:999px;
+  background:#EDF0FF;overflow:hidden;position:relative;
+}
+.axis-fill{
+  height:100%;border-radius:999px;
+  transition:width .7s cubic-bezier(.4,0,.2,1);
+  min-width:4px;
+}
+.axis-lean{
+  text-align:center;font-size:.68rem;font-weight:700;
+  margin-top:3px;transition:all .3s;
+}
+
+.sb-divider{height:1px;background:var(--border);margin:16px 0;}
+
+.sb-tip-box{
+  background:linear-gradient(135deg,#FFFBEB,#FFF5E6);
+  border:1px solid rgba(255,179,61,.3);
+  border-radius:14px;padding:12px 14px;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.sb-tip-icon{font-size:1rem;flex-shrink:0;margin-top:2px;}
+.sb-tip-txt{font-size:.76rem;color:var(--text2);line-height:1.5;}
+
+.dest-preview-box{
+  margin-top:14px;
+  background:linear-gradient(135deg,#F0F4FF,#EFF9FF);
+  border:1px solid #C7D2FE;
+  border-radius:14px;padding:14px;
+  text-align:center;display:none;
+  animation:riseUp .4s ease both;
+}
+.dest-preview-box.show{display:block;}
+.dpb-label{font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--text3);font-weight:700;margin-bottom:6px;}
+.dpb-emoji{font-size:2rem;display:block;margin-bottom:4px;}
+.dpb-name{font-size:.95rem;font-weight:800;color:var(--dark);}
+
+/* =============================================
+   LOADING SCREEN
+============================================= */
+#loading-screen{
+  min-height:100vh;display:flex;
+  align-items:center;justify-content:center;
+  padding:40px;text-align:center;
+}
+.load-wrap{max-width:420px;width:100%;position:relative;z-index:2;}
+.load-globe{
+  font-size:5rem;display:block;margin-bottom:28px;
+  animation:spinBig 1.8s linear infinite;
+}
+@keyframes spinBig{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+.load-h{font-size:1.6rem;font-weight:900;color:var(--dark);margin-bottom:8px;}
+.load-s{font-size:.9rem;color:var(--text2);margin-bottom:32px;}
+.load-track{
+  height:8px;background:var(--border);
+  border-radius:999px;overflow:hidden;margin-bottom:24px;
+}
+.load-fill{
+  height:100%;
+  background:linear-gradient(90deg,#FF6B6B,#FF9F43,#FFD93D,#10B981,#38BDF8);
+  background-size:200% 100%;
+  animation:shimmerBar 1.5s linear infinite;
+  border-radius:999px;width:0%;
+  transition:width .5s ease;
+}
+.load-steps{display:flex;flex-direction:column;gap:10px;}
+.load-step{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 16px;border-radius:14px;
+  background:var(--white);border:1px solid var(--border);
+  font-size:.83rem;color:var(--text3);
+  box-shadow:var(--shadow);transition:all .35s;
+}
+.load-step.done{
+  color:var(--text);border-color:#A7F3D0;
+  background:linear-gradient(135deg,#F0FDF9,#FFFBEB);
+}
+.ls-ic{font-size:1rem;}
+
+/* =============================================
+   RESULTS SCREEN
+============================================= */
+#results-screen{padding-bottom:80px;}
+
+/* Hero */
+.r-hero{
+  position:relative;height:68vh;min-height:440px;
+  overflow:hidden;display:flex;align-items:flex-end;
+}
+.r-hero-img{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  transition:transform 9s ease;
+}
+.r-hero:hover .r-hero-img{transform:scale(1.05);}
+.r-hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,
+    rgba(26,26,62,1) 0%,
+    rgba(26,26,62,.6) 40%,
+    rgba(26,26,62,.15) 75%,
+    transparent 100%);
+}
+.r-hero-content{
+  position:relative;z-index:2;
+  width:100%;max-width:960px;margin:0 auto;
+  padding:40px 32px;
+}
+.r-trophy-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:999px;
+  background:rgba(255,217,61,.15);
+  border:1px solid rgba(255,217,61,.5);
+  color:var(--gold);font-size:.75rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;
+}
+.r-dest-name{
+  font-size:clamp(2.4rem,7vw,5rem);
+  font-weight:900;color:white;line-height:1;
+  text-shadow:0 4px 32px rgba(0,0,0,.4);
+}
+.r-country-row{
+  font-size:1.05rem;color:rgba(255,255,255,.75);
+  margin-top:10px;display:flex;align-items:center;gap:8px;
+}
+.r-tagline{
+  font-size:1rem;color:rgba(255,255,255,.6);
+  margin-top:12px;font-style:italic;max-width:520px;line-height:1.5;
+}
+.r-match-row{
+  margin-top:22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.r-match-label{font-size:.82rem;color:rgba(255,255,255,.6);}
+.r-match-bar{
+  width:140px;height:8px;border-radius:999px;
+  background:rgba(255,255,255,.2);overflow:hidden;
+}
+.r-match-bar-fill{
+  height:100%;border-radius:999px;
+  background:linear-gradient(90deg,#34D399,#38BDF8);
+}
+.r-match-pct{font-size:.95rem;font-weight:800;color:#34D399;}
+
+/* Results body */
+.r-body{max-width:960px;margin:0 auto;padding:48px 24px 0;display:grid;gap:48px;}
+.sec-title{
+  font-size:1.2rem;font-weight:800;color:var(--dark);
+  display:flex;align-items:center;gap:10px;margin-bottom:20px;
+}
+.sec-title-icon{font-size:1.3rem;}
+
+/* DNA grid */
+.dna-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.dna-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r);padding:16px;
+  box-shadow:var(--shadow);
+}
+.dna-labels{display:flex;justify-content:space-between;font-size:.7rem;color:var(--text2);font-weight:700;margin-bottom:7px;}
+.dna-track{height:8px;background:#EDF0FF;border-radius:999px;overflow:hidden;}
+.dna-fill{height:100%;border-radius:999px;}
+.dna-match-txt{font-size:.68rem;color:var(--text3);text-align:center;margin-top:5px;font-weight:600;}
+
+/* Alternative card */
+.alt-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r2);padding:24px;
+  display:flex;align-items:center;gap:20px;
+  box-shadow:var(--shadow);transition:border-color .2s;
+}
+.alt-card:hover{border-color:#C7D2FE;}
+.alt-thumb{
+  width:110px;height:110px;border-radius:20px;
+  background-size:cover;background-position:center;
+  flex-shrink:0;border:3px solid white;
+  box-shadow:var(--shadow);
+}
+.alt-body{flex:1;}
+.alt-eyebrow{font-size:.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--text3);font-weight:700;margin-bottom:6px;}
+.alt-name{font-size:1.25rem;font-weight:800;color:var(--dark);}
+.alt-country{font-size:.82rem;color:var(--text2);margin-top:2px;}
+.alt-line{font-size:.82rem;color:var(--text3);margin-top:8px;line-height:1.4;}
+.alt-pct-badge{
+  font-size:1.5rem;font-weight:900;
+  background:linear-gradient(135deg,#8B5CF6,#EC4899);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  text-align:right;flex-shrink:0;
+}
+
+/* Budget */
+.budget-wrap{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r2);padding:28px;
+  box-shadow:var(--shadow);
+}
+.budget-inner{display:grid;grid-template-columns:1fr 280px;gap:32px;align-items:center;}
+.budget-chart-wrap{position:relative;}
+.budget-center-label{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;pointer-events:none;
+}
+.bcl-total{font-size:1.8rem;font-weight:900;color:var(--dark);}
+.bcl-label{font-size:.72rem;color:var(--text2);}
+.blist{display:flex;flex-direction:column;gap:10px;}
+.brow{display:flex;align-items:center;gap:12px;}
+.bdot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.blabel{font-size:.84rem;color:var(--text2);flex:1;}
+.bamount{font-size:.9rem;font-weight:800;color:var(--dark);}
+
+/* Itinerary */
+.itin-list{display:flex;flex-direction:column;gap:12px;}
+.itin-day{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r2);overflow:hidden;
+  box-shadow:var(--shadow);transition:border-color .2s;
+}
+.itin-day.open{border-color:#C7D2FE;}
+.iday-header{
+  padding:18px 24px;display:flex;align-items:center;gap:16px;
+  cursor:pointer;transition:background .2s;
+}
+.iday-header:hover{background:#F8F9FF;}
+.iday-num{
+  width:44px;height:44px;border-radius:14px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:800;
+}
+.iday-info{flex:1;}
+.iday-title{font-size:.95rem;font-weight:800;color:var(--dark);}
+.iday-sub{font-size:.74rem;color:var(--text3);margin-top:2px;}
+.iday-chevron{
+  margin-left:auto;color:var(--text3);
+  font-size:.75rem;transition:transform .3s;
+}
+.itin-day.open .iday-chevron{transform:rotate(180deg);}
+.iday-body{
+  max-height:0;overflow:hidden;
+  padding:0 24px;
+  transition:max-height .5s ease,padding .3s;
+}
+.itin-day.open .iday-body{max-height:900px;padding-bottom:22px;}
+.slot-list{display:flex;flex-direction:column;gap:16px;}
+.slot-row{display:flex;gap:16px;}
+.slot-time{
+  font-size:.68rem;font-weight:700;color:var(--text3);
+  text-transform:uppercase;letter-spacing:.8px;
+  min-width:72px;padding-top:3px;
+}
+.slot-line{display:flex;flex-direction:column;align-items:center;}
+.slot-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.slot-rail{flex:1;width:2px;background:var(--border);margin-top:4px;}
+.slot-desc{flex:1;font-size:.82rem;color:var(--text2);line-height:1.55;padding-bottom:8px;}
+
+/* Tips */
+.tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.tip-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r);padding:16px;
+  display:flex;gap:12px;box-shadow:var(--shadow);
+}
+.tip-icon{font-size:1.2rem;flex-shrink:0;}
+.tip-txt{font-size:.82rem;color:var(--text2);line-height:1.55;}
+
+/* Packing */
+.pack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.pack-cat{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r);padding:18px;box-shadow:var(--shadow);
+}
+.pcat-title{
+  font-size:.88rem;font-weight:800;margin-bottom:12px;
+  display:flex;align-items:center;gap:6px;
+}
+.pcat-items{display:flex;flex-direction:column;gap:7px;}
+.pcat-item{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--text2);}
+.pcat-item::before{
+  content:'✓';font-size:.68rem;font-weight:800;
+  color:#10B981;flex-shrink:0;
+}
+
+/* Results footer */
+.r-footer{
+  display:flex;justify-content:center;gap:16px;
+  margin-top:48px;flex-wrap:wrap;
+}
+
+/* =============================================
+   CONFETTI
+============================================= */
+.cf-piece{
+  position:fixed;pointer-events:none;z-index:9999;
+  animation:cfFall linear forwards;
+  border-radius:2px;
+}
+@keyframes cfFall{
+  0%{transform:translateY(-20px) rotate(0deg);opacity:1;}
+  100%{transform:translateY(110vh) rotate(720deg);opacity:0;}
+}
+
+/* =============================================
+   RESPONSIVE
+============================================= */
+@media(max-width:960px){
+  .quiz-layout{grid-template-columns:1fr;padding:20px 16px;}
+  .quiz-sidebar{position:static;}
+  .dna-grid{grid-template-columns:repeat(2,1fr);}
+  .budget-inner{grid-template-columns:1fr;}
+  .budget-chart-wrap{max-width:260px;margin:0 auto;}
+  .tips-grid{grid-template-columns:1fr;}
+  .pack-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:640px){
+  .choices-grid{
+    grid-template-columns:1fr;
+    grid-template-rows:auto auto auto;
+  }
+  .vs-col{flex-direction:row;padding:6px 0;}
+  .vs-line-v{height:2px;width:40px;flex:unset;min-height:unset;}
+  .cc-top{min-height:180px;padding:24px 16px 20px;}
+  .cc-emoji-wrap{width:72px;height:72px;font-size:2.2rem;}
+  .r-hero{height:55vh;}
+  .r-hero-content{padding:24px 20px;}
+  .r-dest-name{font-size:2.4rem;}
+  .dna-grid{grid-template-columns:1fr 1fr;}
+  .pack-grid{grid-template-columns:1fr;}
+  .alt-card{flex-direction:column;align-items:flex-start;}
+  .r-body{padding:32px 16px 0;}
+  .intro-chips{gap:8px;}
+}
+  </style>
+</head>
+<body>
+
+<!-- Decorative blobs -->
+<div class="blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+<!-- Floating emoji particles -->
+<div id="ptcl" style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;"></div>
+
+<!-- ==========================================
+     INTRO SCREEN
+========================================== -->
+<div id="intro-screen" class="screen active">
+  <div class="intro-inner">
+    <div class="intro-logo-row">
+      <div class="intro-logo-icon">✈️</div>
+      <span class="intro-logo-text">TravelIQ · World Cup Edition</span>
+    </div>
+
+    <span class="intro-globe">🌍</span>
+
+    <h1 class="intro-headline">
+      <span>Travel Ideal Type<br>World Cup</span>
+    </h1>
+    <p class="intro-sub">
+      10 A vs B rounds → AI matches you to your <em>perfect</em> destination with a real budget, full 7-day itinerary &amp; packing list.
+    </p>
+
+    <div class="intro-chips">
+      <div class="chip"><em>🎯</em> Personalized match</div>
+      <div class="chip"><em>💰</em> Real budget data</div>
+      <div class="chip"><em>🗓️</em> 7-day itinerary</div>
+      <div class="chip"><em>🧳</em> Packing list</div>
+      <div class="chip"><em>🌏</em> 12 destinations</div>
+    </div>
+
+    <button class="btn-main" onclick="startQuiz()" id="start-btn">
+      ✈️ Start My Journey →
+    </button>
+
+    <p class="intro-meta">
+      <b>10 rounds</b> · ~3 minutes · completely free
+    </p>
+  </div>
+</div>
+
+<!-- ==========================================
+     QUIZ SCREEN
+========================================== -->
+<div id="quiz-screen" class="screen">
+  <!-- Sticky nav bar -->
+  <nav class="quiz-nav">
+    <div class="qn-inner">
+      <a class="qn-logo" href="#" onclick="return false;">
+        <div class="qn-logo-icon">✈️</div>
+        TravelIQ
+      </a>
+      <div class="qn-bar-wrap">
+        <div class="qn-bar-meta">
+          <span id="qn-label">Round 1 of 10</span>
+          <span id="qn-pct">0%</span>
+        </div>
+        <div class="qn-track">
+          <div class="qn-fill" id="qn-fill"></div>
+        </div>
+      </div>
+      <div class="qn-round" id="qn-round">1 / 10</div>
+    </div>
+  </nav>
+
+  <!-- Main layout -->
+  <div class="quiz-layout">
+    <!-- Left: question + cards -->
+    <div class="quiz-main">
+      <!-- Question header -->
+      <div class="q-header">
+        <div class="q-cat-badge" id="q-cat">🌿 Environment</div>
+        <h2 class="q-main-text" id="q-text">Your dream vacation begins at…</h2>
+      </div>
+
+      <!-- A / VS / B cards -->
+      <div class="choices-grid">
+        <!-- Card A (warm) -->
+        <div class="choice-card card-a" id="card-a" onclick="pickChoice('a')">
+          <div class="cc-top">
+            <div class="cc-letter">A</div>
+            <div class="cc-emoji-wrap" id="emoji-a">🏖️</div>
+            <div class="cc-title" id="title-a">Sun-Kissed Beach</div>
+            <div class="cc-desc" id="desc-a">Warm sand, crashing waves, and a cocktail in your hand.</div>
+            <div class="cc-tags" id="tags-a">
+              <span class="cc-tag">Relaxing</span>
+              <span class="cc-tag">Warm</span>
+            </div>
+          </div>
+          <button class="cc-btn" tabindex="-1">
+            Choose A <span class="cb-arrow">→</span>
+          </button>
+        </div>
+
+        <!-- VS divider -->
+        <div class="vs-col">
+          <div class="vs-line-v"></div>
+          <div class="vs-badge">VS</div>
+          <div class="vs-line-v"></div>
+        </div>
+
+        <!-- Card B (cool) -->
+        <div class="choice-card card-b" id="card-b" onclick="pickChoice('b')">
+          <div class="cc-top">
+            <div class="cc-letter">B</div>
+            <div class="cc-emoji-wrap" id="emoji-b">🏔️</div>
+            <div class="cc-title" id="title-b">Misty Mountains</div>
+            <div class="cc-desc" id="desc-b">Crisp alpine air, dramatic peaks, the thrill of the climb.</div>
+            <div class="cc-tags" id="tags-b">
+              <span class="cc-tag">Adventure</span>
+              <span class="cc-tag">Nature</span>
+            </div>
+          </div>
+          <button class="cc-btn" tabindex="-1">
+            Choose B <span class="cb-arrow">→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Skip -->
+      <div class="skip-wrap">
+        <button class="skip-btn" onclick="pickChoice('skip')">😅 Can't decide? Skip this one</button>
+      </div>
+    </div>
+
+    <!-- Right: sidebar -->
+    <aside class="quiz-sidebar">
+      <div class="sb-card">
+        <div class="sb-header">
+          <div class="sb-title">🧠 Your Travel DNA</div>
+          <div class="sb-sub">Live analysis · updates after each choice</div>
+        </div>
+        <div id="axes-wrap"></div>
+        <div class="sb-divider"></div>
+        <div class="sb-tip-box">
+          <div class="sb-tip-icon">💡</div>
+          <div class="sb-tip-txt" id="sb-tip">Make your first choice to unlock your travel personality!</div>
+        </div>
+        <div class="dest-preview-box" id="dest-preview-box">
+          <div class="dpb-label">🔮 Current frontrunner</div>
+          <span class="dpb-emoji" id="dpb-emoji">🌍</span>
+          <div class="dpb-name" id="dpb-name">—</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- ==========================================
+     LOADING SCREEN
+========================================== -->
+<div id="loading-screen" class="screen">
+  <div class="load-wrap">
+    <span class="load-globe">🌍</span>
+    <h2 class="load-h">Analyzing your travel DNA…</h2>
+    <p class="load-s">Finding your perfect destination out of 12 options</p>
+    <div class="load-track">
+      <div class="load-fill" id="load-fill"></div>
+    </div>
+    <div class="load-steps">
+      <div class="load-step" id="ls-0"><span class="ls-ic">⏳</span> Processing your preferences…</div>
+      <div class="load-step" id="ls-1"><span class="ls-ic">⏳</span> Scanning 12 destinations…</div>
+      <div class="load-step" id="ls-2"><span class="ls-ic">⏳</span> Crunching 7-day budget…</div>
+      <div class="load-step" id="ls-3"><span class="ls-ic">⏳</span> Crafting your itinerary…</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     RESULTS SCREEN
+========================================== -->
+<div id="results-screen" class="screen">
+  <!-- Hero -->
+  <div class="r-hero">
+    <div class="r-hero-img" id="r-img"></div>
+    <div class="r-hero-overlay"></div>
+    <div class="r-hero-content">
+      <div class="r-trophy-badge">🏆 Your Perfect Match</div>
+      <div class="r-dest-name" id="r-name">Bali</div>
+      <div class="r-country-row" id="r-country">🇮🇩 Indonesia · Southeast Asia</div>
+      <div class="r-tagline" id="r-tagline">"Where gods bathe in firelight and rice terraces dream in green."</div>
+      <div class="r-match-row">
+        <span class="r-match-label">Match score:</span>
+        <div class="r-match-bar">
+          <div class="r-match-bar-fill" id="r-match-fill" style="width:0%"></div>
+        </div>
+        <span class="r-match-pct" id="r-match-pct">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="r-body">
+
+    <!-- DNA -->
+    <section>
+      <div class="sec-title"><span class="sec-title-icon">🧬</span>Your Travel DNA vs Destination Profile</div>
+      <div class="dna-grid" id="dna-grid"></div>
+    </section>
+
+    <!-- Alternative -->
+    <section>
+      <div class="sec-title"><span class="sec-title-icon">🗺️</span>Also Consider…</div>
+      <div class="alt-card">
+        <div class="alt-thumb" id="alt-thumb"></div>
+        <div class="alt-body">
+          <div class="alt-eyebrow">✨ Runner-up Destination</div>
+          <div class="alt-name" id="alt-name">Tokyo</div>
+          <div class="alt-country" id="alt-country">🇯🇵 Japan</div>
+          <div class="alt-line" id="alt-line">A perfect blend of traditions and futurism.</div>
+        </div>
+        <div class="alt-pct-badge" id="alt-pct">—%</div>
+      </div>
+    </section>
+
+    <!-- Budget -->
+    <section>
+      <div class="sec-title"><span class="sec-title-icon">💰</span>Budget Breakdown · 7 Days / Person</div>
+      <div class="budget-wrap">
+        <div class="budget-inner">
+          <div class="budget-chart-wrap">
+            <canvas id="budget-chart" height="260"></canvas>
+            <div class="budget-center-label">
+              <div class="bcl-total" id="r-total">$0</div>
+              <div class="bcl-label">total est.</div>
+            </div>
+          </div>
+          <div class="blist" id="blist"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Itinerary -->
+    <section>
+      <div class="sec-title"><span class="sec-title-icon">🗓️</span>7-Day Itinerary</div>
+      <div class="itin-list" id="itin-list"></div>
+    </section>
+
+    <!-- Tips -->
+    <section>
+      <div class="sec-title"><span class="sec-title-icon">💡</span>Insider Tips</div>
+      <div class="tips-grid" id="tips-grid"></div>
+    </section>
+
+    <!-- Packing -->
+    <section>
+      <div class="sec-title"><span class="sec-title-icon">🧳</span>Packing List</div>
+      <div class="pack-grid" id="pack-grid"></div>
+    </section>
+
+    <!-- Footer -->
+    <div class="r-footer">
+      <button class="btn-main" onclick="restartQuiz()">🔄 Retake the Quiz</button>
+      <button class="btn-ghost" onclick="shareResult()">📤 Share My Result</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =====================================================
+   DATA: QUESTIONS
+   Axes: ra(relax/adv) cn(city/nat) di(dom/int)
+         lb(lux/bud)  fa(food/act) sg(solo/grp)
+===================================================== */
+const QUESTIONS=[
+  {id:1,cat:'🌿 Environment',text:'Your dream vacation begins at…',
+   a:{emoji:'🏖️',title:'Sun-Kissed Beach',desc:'Warm sand between your toes, waves lapping, a signature cocktail in hand.',tags:['Relaxing','Tropical','Scenic'],w:{ra:-2,cn:1,di:0,lb:0,fa:0,sg:0}},
+   b:{emoji:'🏔️',title:'Misty Mountains',desc:'Crisp alpine air, dramatic peaks, the pure thrill of altitude.',tags:['Adventure','Nature','Physical'],w:{ra:2,cn:2,di:0,lb:0,fa:0,sg:0}}},
+  {id:2,cat:'🌆 Setting',text:'After check-in, you head straight for…',
+   a:{emoji:'🌆',title:'Neon City Skyline',desc:'Rooftop bars, street art, museums, and world-class restaurants.',tags:['Urban','Cultural','Vibrant'],w:{ra:-1,cn:-2,di:0,lb:0,fa:-1,sg:1}},
+   b:{emoji:'🌿',title:'Wild Countryside',desc:'Rolling hills, hidden waterfalls, birdsong replacing traffic.',tags:['Serene','Nature','Quiet'],w:{ra:1,cn:2,di:0,lb:1,fa:0,sg:-1}}},
+  {id:3,cat:'✈️ Distance',text:'When it comes to the flight…',
+   a:{emoji:'🏡',title:'Close to Home',desc:'No long-haul flights — incredible hidden gems in your own region.',tags:['Easy','Affordable','Familiar'],w:{ra:-1,cn:0,di:-2,lb:1,fa:0,sg:0}},
+   b:{emoji:'✈️',title:'Cross the Globe',desc:'Board a 12-hour flight and wake up in a completely different world.',tags:['Epic','Exotic','New Cultures'],w:{ra:1,cn:0,di:2,lb:-1,fa:0,sg:0}}},
+  {id:4,cat:'🛎️ Accommodation',text:'Your ideal place to rest your head is…',
+   a:{emoji:'🏰',title:'5-Star Luxury Resort',desc:'Private pool villa, butler service, champagne on arrival, silk robes.',tags:['Premium','Pampering','Indulgent'],w:{ra:-2,cn:0,di:0,lb:-2,fa:0,sg:-1}},
+   b:{emoji:'🎒',title:'Backpacker Hostel',desc:'Dorm beds, hammocks, Airbnb gems — save money for more experiences.',tags:['Budget','Social','Flexible'],w:{ra:1,cn:0,di:0,lb:2,fa:1,sg:1}}},
+  {id:5,cat:'🍜 Experiences',text:'Your perfect day is filled with…',
+   a:{emoji:'🍜',title:'Epic Food Journey',desc:'Street markets, local gems, food tours — eat your way through the city.',tags:['Foodie','Authentic','Local'],w:{ra:-1,cn:0,di:0,lb:0,fa:-2,sg:1}},
+   b:{emoji:'🪂',title:'Pure Adrenaline',desc:'Skydiving, rafting, cliff diving — the higher the heart rate, the better.',tags:['Thrill','Active','Outdoors'],w:{ra:2,cn:1,di:0,lb:0,fa:2,sg:0}}},
+  {id:6,cat:'👥 Company',text:'Your travel squad looks like…',
+   a:{emoji:'🧘',title:'Just Me, Myself & I',desc:'Total freedom — eat when hungry, pivot plans hourly, zero compromise.',tags:['Independent','Reflective','Free'],w:{ra:0,cn:1,di:0,lb:0,fa:0,sg:-2}},
+   b:{emoji:'🥂',title:'The Full Crew',desc:'Shared memories, group selfies, inside jokes, splitting the bill.',tags:['Social','Fun','Connected'],w:{ra:0,cn:-1,di:0,lb:0,fa:0,sg:2}}},
+  {id:7,cat:'🌞 Pace',text:'Your ideal vacation vibe is…',
+   a:{emoji:'🧖',title:'Spa & Slow Travel',desc:'Wellness retreats, journaling at sunsets, three-hour lunches, no alarm clocks.',tags:['Restorative','Mindful','Slow'],w:{ra:-2,cn:0,di:0,lb:-1,fa:-1,sg:-1}},
+   b:{emoji:'🎉',title:'Nightlife & Non-Stop',desc:'Dance until 4 AM, catch the sunrise, start again. FOMO is a lifestyle.',tags:['Wild','Electric','Social'],w:{ra:2,cn:-1,di:0,lb:1,fa:1,sg:2}}},
+  {id:8,cat:'🗺️ Activities',text:'Given a free afternoon, you\'d spend it…',
+   a:{emoji:'🖼️',title:'Museums & Culture',desc:'Lost in ancient art, local history, architecture, hidden bookshops.',tags:['Intellectual','Cultural','Indoor'],w:{ra:-1,cn:-1,di:0,lb:0,fa:-1,sg:0}},
+   b:{emoji:'🤿',title:'Diving & Surfing',desc:'Riding waves, coral reefs, kayaking — chasing the next ocean thrill.',tags:['Active','Ocean','Physical'],w:{ra:1,cn:2,di:0,lb:0,fa:2,sg:0}}},
+  {id:9,cat:'💳 Spending',text:'When dining out on vacation, you…',
+   a:{emoji:'🍷',title:'Fine Dining Only',desc:'Tasting menus, wine pairings, candlelit tables — memorable every night.',tags:['Luxurious','Curated','Indulgent'],w:{ra:-1,cn:0,di:0,lb:-2,fa:-1,sg:1}},
+   b:{emoji:'🥙',title:'Street Food Always',desc:'Follow the locals, eat from carts, sit on plastic chairs — $2 perfection.',tags:['Authentic','Budget','Real'],w:{ra:1,cn:0,di:0,lb:2,fa:-1,sg:1}}},
+  {id:10,cat:'🧭 Style',text:'Your overall travel style is…',
+   a:{emoji:'🐢',title:'Deep Dive (2 places max)',desc:'One city, really get under its skin, live like a local for days.',tags:['Immersive','Slow','Intentional'],w:{ra:-2,cn:0,di:0,lb:1,fa:0,sg:-1}},
+   b:{emoji:'🚀',title:'FOMO Mode (6+ destinations)',desc:'New city every two days, maximize every hour, sleep is optional.',tags:['Rapid','Varied','Ambitious'],w:{ra:2,cn:0,di:1,lb:-1,fa:1,sg:1}}}
+];
+
+/* =====================================================
+   DATA: AXES CONFIG
+===================================================== */
+const AXES=[
+  {key:'ra',l1:'🧘 Relax',l2:'Adventure 🏃',color:'#FF6B6B'},
+  {key:'cn',l1:'🏙️ City',l2:'Nature 🌿',color:'#10B981'},
+  {key:'di',l1:'🏡 Local',l2:'International ✈️',color:'#38BDF8'},
+  {key:'lb',l1:'💎 Luxury',l2:'Budget 🎒',color:'#8B5CF6'},
+  {key:'fa',l1:'🍜 Food',l2:'Activity 🪂',color:'#F472B6'},
+  {key:'sg',l1:'🧘 Solo',l2:'Group 🥂',color:'#F59E0B'},
+];
+
+/* =====================================================
+   DATA: DESTINATIONS
+===================================================== */
+const DESTS=[
+  {id:'bali',name:'Bali',country:'🇮🇩 Indonesia · Southeast Asia',emoji:'🌴',
+   tagline:'"Where temple incense meets the ocean breeze and every sunset is sacred."',
+   profile:{ra:-1,cn:5,di:8,lb:4,fa:-1,sg:1},
+   photo:'1537996194471-e657df975ab4',
+   grad:'linear-gradient(160deg,#FF6B35,#FF4B7A,#FFB347)',
+   budget:{flights:450,accommodation:380,food:160,activities:220,transport:90,shopping:120},
+   itinerary:[
+     {theme:'Arrival & Seminyak Vibes',emoji:'✈️',morning:'Land at Ngurah Rai, transfer to Seminyak. Check into your villa.',afternoon:'Stroll Seminyak Beach. Browse boutique shops on Jl. Kayu Aya.',evening:'Sundowner cocktails at Ku De Ta, then dinner at Merah Putih for modern Indonesian cuisine.'},
+     {theme:'Ubud — Art & Spirit',emoji:'🎨',morning:'Drive to Ubud. Visit the Sacred Monkey Forest and Ubud Royal Palace.',afternoon:'Ubud Art Market, then a traditional Balinese painting class at ARMA Museum.',evening:'Kecak Fire Dance performance at Uluwatu Temple at sunset.'},
+     {theme:'Rice Terraces & Waterfalls',emoji:'🌾',morning:'Cycle through Tegalalang Rice Terraces early — before the tour groups arrive.',afternoon:'Hike to Tegenungan Waterfall and swim in the emerald pool.',evening:'Cooking class at Bumbu Bali — learn to make rendang and gado-gado.'},
+     {theme:'Temple Odyssey',emoji:'🛕',morning:'Tirta Empul Holy Water Temple — watch or join the bathing purification ritual.',afternoon:'Pura Luhur Batukaru, most sacred volcano temple, deep in the rainforest.',evening:'Gianyar night market — try babi guling (suckling pig) and rice cakes.'},
+     {theme:'Adventure Day',emoji:'🏄',morning:'White-water rafting on the Ayung River through jungle gorges.',afternoon:'ATV quad-bike ride through rice paddies and traditional villages.',evening:'Spa evening — Balinese massage and boreh scrub at an Ubud wellness retreat.'},
+     {theme:'Uluwatu & Nusa Dua',emoji:'🌊',morning:'Snorkeling at Blue Point Beach — crystal clear with sea turtles below.',afternoon:'Cliff walk along Uluwatu, visit the temple perched 70m above crashing waves.',evening:'Jimbaran Bay seafood BBQ on the beach — grilled lobster at sunset.'},
+     {theme:'Day Trip & Depart',emoji:'🌅',morning:'Fast boat to Nusa Penida — see the stunning Kelingking Beach viewpoint.',afternoon:'Snorkel at Crystal Bay with manta rays. Return to Bali by afternoon.',evening:'Farewell shopping in Seminyak for batik, silver jewelry, and sarongs.'}
+   ],
+   tips:[{icon:'🕌',text:'Wear a sarong and sash at all temples — usually provided at the entrance gate.'},{icon:'💸',text:'Carry small IDR bills for street food, offerings, and tipping. ATMs charge fees.'},{icon:'🛵',text:'Rent a scooter for under $5/day to navigate like a local — watch for narrow roads.'},{icon:'⏰',text:'Hit rice terraces and waterfalls before 8 AM to beat the tour groups.'},{icon:'🌧️',text:'Best weather: April–October (dry). November–March has rain but fewer tourists.'}],
+   packing:{'👗 Clothing':['Light linen tops','Sarong (temple visits)','Sun dress / shorts','Rain jacket','Swimwear ×3'],'💊 Health':['DEET mosquito repellent','SPF 50+ sunscreen','Antidiarrheal tablets','Water purification tabs'],'📱 Tech':['Type C adapter','Waterproof phone case','Power bank','Underwater camera']},
+   altId:'thailand'},
+
+  {id:'tokyo',name:'Tokyo',country:'🇯🇵 Japan · East Asia',emoji:'🗼',
+   tagline:'"Ancient traditions meet pop-culture chaos in the world\'s most organized metropolis."',
+   profile:{ra:-3,cn:-5,di:9,lb:1,fa:-7,sg:3},
+   photo:'1540959733332-eab4deabeeaf',
+   grad:'linear-gradient(160deg,#E83E6C,#7952B3,#00B4D8)',
+   budget:{flights:720,accommodation:850,food:320,activities:160,transport:210,shopping:280},
+   itinerary:[
+     {theme:'Shinjuku & Arrival',emoji:'🚅',morning:'Arrive at Narita/Haneda. Take Narita Express to Shinjuku. Rest up.',afternoon:'Explore Shinjuku — iconic east and west exits, Omoide Yokocho (Memory Lane).',evening:'Drinks at a Golden Gai bar — tiny 6-seat bars with the best atmosphere in the world.'},
+     {theme:'Shibuya & Harajuku',emoji:'🛍️',morning:'Shibuya Crossing scramble — watch from Starbucks rooftop for the best view.',afternoon:'Harajuku Takeshita Street for quirky fashion, crepes, and people-watching.',evening:'Dinner at a standing sushi bar in Shibuya — ultra-fresh and very affordable.'},
+     {theme:'Old Tokyo — Asakusa & Ueno',emoji:'🛕',morning:'Senso-ji Temple at dawn before crowds — monks chanting, incense curling.',afternoon:'Ueno Park and Tokyo National Museum.',evening:'Akihabara Electric Town — manga, anime, retro arcades, and every gadget imaginable.'},
+     {theme:'Yanaka & Hidden Tokyo',emoji:'🏯',morning:'Yanaka — Tokyo\'s best-preserved old neighborhood with narrow lanes and indie shops.',afternoon:'Nezu Shrine — thousands of torii gates stretching into the hillside.',evening:'Izakaya dinner in Koenji — yakitori, karaage, edamame, cold Sapporo.'},
+     {theme:'Day Trip — Nikko',emoji:'🌊',morning:'Early Shinkansen to Nikko — ornate Toshogu Shrine in the mountains.',afternoon:'Kegon Waterfall and Chuzenji Lake — breathtaking scenery.',evening:'Return to Tokyo. Late-night ramen at Ichiran (private booth dining).'},
+     {theme:'TeamLab & Pop Culture',emoji:'🎨',morning:'TeamLab Planets or Borderless — book ahead, immersive digital art.',afternoon:'Odaiba waterfront — futuristic architecture, Gundam statue, malls.',evening:'Sky-high dinner at Roppongi with Tokyo Bay views glittering below.'},
+     {theme:'Local Markets & Goodbye',emoji:'🛒',morning:'Tsukiji Outer Market — freshest sashimi breakfast, tamagoyaki, stalls.',afternoon:'Last shopping in Shibuya or Ginza. Japanese Kit-Kat flavors are essential.',evening:'Farewell sake tasting session, then airport transfer. Sayonara, Tokyo!'}
+   ],
+   tips:[{icon:'🚇',text:'Get a Suica or Pasmo IC card immediately — tap in/out of every train and buy vending machine drinks.'},{icon:'💴',text:'Japan is cash-reliant. Carry ¥10k–¥20k daily. 7-Eleven ATMs accept foreign cards.'},{icon:'🍣',text:'Best sushi: stand-up counters hidden on second floors, not tourist spots near shrines.'},{icon:'🎌',text:'Get a pocket WiFi or SIM at the airport — Google Maps is essential everywhere.'},{icon:'🗓️',text:'Book TeamLab, popular ryokan, and omakase restaurants weeks ahead — they sell out.'}],
+   packing:{'👗 Clothing':['Comfortable walking shoes','Layered clothing','Slip-on shoes (for temples)','Compact umbrella'],'💊 Health':['Motion sickness tablets','Blister plasters','Cold medicine'],'📱 Tech':['Pocket WiFi (rent at airport)','Portable charger','Earphones (quiet zones)']},
+   altId:'kyoto'},
+
+  {id:'paris',name:'Paris',country:'🇫🇷 France · Western Europe',emoji:'🗼',
+   tagline:'"Every corner is a painting. Every meal is an event. Every evening is eternal."',
+   profile:{ra:-4,cn:-7,di:9,lb:-6,fa:-4,sg:4},
+   photo:'1502602898657-3e91760cbb34',
+   grad:'linear-gradient(160deg,#FF6B9D,#7B2FBE,#FFD700)',
+   budget:{flights:620,accommodation:950,food:420,activities:210,transport:160,shopping:320},
+   itinerary:[
+     {theme:'Arrival & Eiffel Magic',emoji:'🗼',morning:'Arrive, check into Le Marais or Saint-Germain. Drop bags and go.',afternoon:'Walk along the Seine. Eiffel Tower view from Trocadéro.',evening:'Eiffel Tower summit at dusk — watch the city turn gold, then the sparkle begins.'},
+     {theme:'Louvre & Île de la Cité',emoji:'🖼️',morning:'Louvre Museum — arrive early. Mona Lisa, Venus de Milo, Winged Victory.',afternoon:'Walk to Notre-Dame, cross to Île Saint-Louis for Berthillon ice cream.',evening:'Dinner at Bistrot Paul Bert — classic steak-frites, crème brûlée.'},
+     {theme:'Montmartre & Sacré-Cœur',emoji:'🎨',morning:'Climb Montmartre early for views. Sacré-Cœur Basilica, artists\' square.',afternoon:'Bohemian streets, visit Moulin Rouge for the history.',evening:'Wine and charcuterie at a cave à manger in Pigalle.'},
+     {theme:'Day Trip to Versailles',emoji:'🏰',morning:'RER C to Palace of Versailles — Hall of Mirrors, Royal Apartments.',afternoon:'Wander the immense gardens and Grand Trianon estate.',evening:'Return to Paris. Oysters at a brasserie in Saint-Germain.'},
+     {theme:'The Marais & Modern Paris',emoji:'🏛️',morning:'Centre Pompidou — modern art and rooftop views over Paris.',afternoon:'Le Marais — Jewish quarter, boutiques, galleries, falafels on Rue des Rosiers.',evening:'Cocktails at a rooftop bar, dinner at a natural wine bistro.'},
+     {theme:'Orsay & Luxury Shopping',emoji:'💎',morning:'Musée d\'Orsay — Impressionist treasures: Monet, Renoir, Van Gogh.',afternoon:'Champs-Élysées and luxury boutiques. Window shopping or splurging.',evening:'Seine river dinner cruise — see Paris at night from the water.'},
+     {theme:'Final Patisserie & Au Revoir',emoji:'🥐',morning:'Final croissant and café au lait at a corner brasserie. Bliss.',afternoon:'Last stroll through Saint-Germain, browse Shakespeare & Company.',evening:'Final dinner at a classic French bistro, airport transfer.'}
+   ],
+   tips:[{icon:'🥐',text:'Best pastries: look for Artisan Boulanger sign — only 10% of bakeries earn it.'},{icon:'🗝️',text:'Book Louvre and Musée d\'Orsay tickets online — queues are 2+ hours without pre-booking.'},{icon:'🚇',text:'Buy a weekly Navigo Découverte pass for unlimited metro + RER travel (covers Versailles!).'},{icon:'🇫🇷',text:'A basic "Bonjour!" before any request goes a long way with Parisians.'},{icon:'🍷',text:'Picnic by the Seine with wine from Nicolas + cheese from a fromagerie = $15 perfect dinner.'}],
+   packing:{'👗 Clothing':['Stylish trench coat','Smart casual outfits','Comfortable heels','Light scarf'],'💊 Health':['Sunscreen','Blister plasters (cobblestones!)','Antihistamines (spring)'],'📱 Tech':['European adapter (Type E)','DSLR camera','Portable charger']},
+   altId:'barcelona'},
+
+  {id:'maldives',name:'Maldives',country:'🇲🇻 Maldives · Indian Ocean',emoji:'🏝️',
+   tagline:'"A place so beautiful it almost feels like the planet is apologizing for everything else."',
+   profile:{ra:-7,cn:3,di:9,lb:-8,fa:2,sg:-2},
+   photo:'1573843981267-be1480b89f32',
+   grad:'linear-gradient(160deg,#00B4D8,#0077B6,#90E0EF)',
+   budget:{flights:1100,accommodation:3200,food:620,activities:450,transport:220,shopping:120},
+   itinerary:[
+     {theme:'Arrival & First Splash',emoji:'🛥️',morning:'Fly to Malé, speed boat or seaplane to your resort island. Pure movie moment.',afternoon:'Check into overwater bungalow. Jump off your deck into turquoise water.',evening:'Sunset champagne on your private deck. Stars that look fake, they\'re so bright.'},
+     {theme:'Underwater World',emoji:'🤿',morning:'Snorkeling reef trip — sea turtles, reef sharks, kaleidoscope of fish.',afternoon:'PADI scuba dive or intro dive at one of the world\'s top reef sites.',evening:'Bioluminescent plankton beach walk — the sand glows electric blue at night.'},
+     {theme:'Water Sports & Wellness',emoji:'🏄',morning:'Paddleboard at sunrise across the still, glassy lagoon.',afternoon:'Jet ski, parasailing, or dolphin-watching cruise.',evening:'Couples spa with floating petals and ocean-view massage pavilion.'},
+     {theme:'Local Island Experience',emoji:'⛵',morning:'Day trip to a local inhabited island — see real Maldivian life beyond the resorts.',afternoon:'Colorful fishing harbor, local hedhikaa (snacks), handcraft shopping.',evening:'Return to resort. Underwater restaurant dinner — sharks swim past your table.'},
+     {theme:'Deep Blue Diving',emoji:'🦈',morning:'Full-day liveaboard dive — whale sharks, manta rays, hammerheads.',afternoon:'Blue holes and caverns with your dive guide.',evening:'Bonfire on the sandbank. S\'mores over the Indian Ocean.'},
+     {theme:'Pure Relaxation',emoji:'🌅',morning:'Absolutely nothing. Hammock. Book. Coconut. Repeat.',afternoon:'Float in your villa\'s plunge pool. The fish are more disciplined than you.',evening:'Sunset fishing with the resort. Cook your catch on the beach.'},
+     {theme:'Final Morning & Departure',emoji:'💔',morning:'One last sunrise swim. Take too many photos. Promise to return.',afternoon:'Seaplane back to Malé. The turquoise atolls shrink away.',evening:'Long-haul flight home. You\'re already planning the return trip.'}
+   ],
+   tips:[{icon:'💍',text:'The ultimate honeymoon destination — mention it at booking and resorts often upgrade you.'},{icon:'🏊',text:'Choose a resort based on its "house reef" — some are spectacular right off the beach.'},{icon:'🌡️',text:'Best season: November–April (dry and sunny). May–October is cheaper but can be rainy.'},{icon:'💰',text:'Budget $40+ for meals and $15 per drink at resort — everything is imported.'},{icon:'🐠',text:'Bring an underwater camera — you\'ll see things you need documented to prove are real.'}],
+   packing:{'👗 Clothing':['Lots of swimwear','Floaty coverups','Light linen','Reef-safe SPF 50','Wide sun hat'],'💊 Health':['Seasickness tablets','After-sun lotion','Coral-safe sunscreen only','Eye drops'],'📱 Tech':['GoPro + waterproof case','Underwater camera housing','Drone (check resort rules)']},
+   altId:'bali'},
+
+  {id:'barcelona',name:'Barcelona',country:'🇪🇸 Spain · Southern Europe',emoji:'🎭',
+   tagline:'"Gaudí\'s fever dreams made real, where every tapas bar holds the secret of life."',
+   profile:{ra:1,cn:-3,di:9,lb:-1,fa:-3,sg:7},
+   photo:'1539037116277-4db20889f2d4',
+   grad:'linear-gradient(160deg,#FC4F30,#F7C59F,#4C6EF5)',
+   budget:{flights:520,accommodation:720,food:320,activities:160,transport:130,shopping:220},
+   itinerary:[
+     {theme:'Arrival & Las Ramblas',emoji:'🌹',morning:'Check into Gothic Quarter hotel. Cortado at Bar Marsella, Barcelona\'s oldest bar.',afternoon:'Walk Las Ramblas to the waterfront. Visit La Boqueria Market — eat everything.',evening:'Vermouth in El Born, dinner tapas at Quimet & Quimet (legendary, tiny bar).'},
+     {theme:'Gaudí Day',emoji:'🏛️',morning:'Sagrada Família — book the tower access. Light through stained glass is incredible.',afternoon:'Park Güell — mosaic terraces overlooking the city. Sunset views are spectacular.',evening:'Dinner in Gràcia neighborhood — young, bohemian, excellent natural wine.'},
+     {theme:'Barceloneta & the Beach',emoji:'🏄',morning:'Breakfast with ocean view at a chiringuito beach bar.',afternoon:'Barceloneta Beach — swim, beach volleyball, or paddleboard session.',evening:'Seafood paella at La Barceloneta. Sangria as the sun dips into the Mediterranean.'},
+     {theme:'Montjuïc & Arts',emoji:'🎨',morning:'Cable car up Montjuïc for panoramic port views. National Art Museum (MNAC).',afternoon:'Joan Miró Foundation — colorful, joyful surrealism in a gorgeous building.',evening:'Poble Sec — Carrer de Blai for pintxos bar-hopping (tapas on bread, 1€ each).'},
+     {theme:'Day Trip to Sitges',emoji:'🌊',morning:'Train to Sitges (30 min) — charming coastal village with beautiful beaches.',afternoon:'Old town walk, seafood lunch, swim in the cleaner Mediterranean.',evening:'Return to Barcelona. Cocktails at a rooftop bar on Passeig de Gràcia.'},
+     {theme:'El Raval & Street Art',emoji:'🖼️',morning:'MACBA (Contemporary Art Museum) and CCCB arts center.',afternoon:'Street art tour of Poblenou — Barcelona\'s creative district, brilliant murals.',evening:'Dinner at a terrace restaurant in Eixample. Cava and jamón to celebrate.'},
+     {theme:'Final Stroll & Farewell',emoji:'✈️',morning:'Morning walk through Gothic Quarter — tiny plazas and Roman ruins.',afternoon:'Final shopping on Passeig de Gràcia. Güell Palace if not visited yet.',evening:'Farewell tapas and flights of cava. Adéu, Barcelona!'}
+   ],
+   tips:[{icon:'⏰',text:'Dinner STARTS at 9 PM in Barcelona. If you\'re there at 7 PM, you\'re eating with tourists.'},{icon:'👜',text:'Watch your belongings on Las Ramblas and Barceloneta — pickpocketing is very common.'},{icon:'🎫',text:'Book Sagrada Família tickets months ahead — one of the most visited sites in Europe.'},{icon:'🌞',text:'Best months: May, June, September, October. July–August is very hot and overcrowded.'},{icon:'🚇',text:'The T-Casual metro card (10 trips) is far cheaper than single tickets. Buy one immediately.'}],
+   packing:{'👗 Clothing':['Casual Mediterranean style','Swimwear','Walking sandals + smart shoes','Light cardigan for evenings'],'💊 Health':['High-SPF sunscreen','Heat rash cream','Stomach tablets','Sunglasses'],'📱 Tech':['European adapter (Type F)','Portable charger for long days','Offline maps']},
+   altId:'paris'},
+
+  {id:'iceland',name:'Iceland',country:'🇮🇸 Iceland · North Atlantic',emoji:'❄️',
+   tagline:'"Where volcanoes meet glaciers and the sky performs light shows for free every night."',
+   profile:{ra:7,cn:8,di:9,lb:-2,fa:5,sg:-3},
+   photo:'1520769945061-0a448c463865',
+   grad:'linear-gradient(160deg,#00B4D8,#6A0DAD,#00FF88)',
+   budget:{flights:720,accommodation:840,food:370,activities:520,transport:420,shopping:160},
+   itinerary:[
+     {theme:'Reykjavík Arrival',emoji:'🏙️',morning:'Arrive at Keflavík. Drive rental car to Reykjavík (45 min). Walk Laugavegur.',afternoon:'Hallgrímskirkja church for panoramic views. Harpa Concert Hall waterfront.',evening:'Dinner at Dill restaurant — New Nordic cuisine using only Icelandic ingredients.'},
+     {theme:'Golden Circle',emoji:'🌋',morning:'Þingvellir National Park — walk between the North American and Eurasian tectonic plates.',afternoon:'Geysir geothermal area — Strokkur blasts 30m skyward every 5 minutes.',evening:'Gullfoss waterfall at sunset. Check into guesthouse with mountain views.'},
+     {theme:'South Coast Adventure',emoji:'⛰️',morning:'Seljalandsfoss waterfall — walk behind the curtain of falls.',afternoon:'Skógafoss waterfall, then Dyrhólaey arch and Reynisfjara black sand beach.',evening:'Check into Vík guesthouse. Northern lights alert — check the aurora app!'},
+     {theme:'Glacier Hiking',emoji:'🧊',morning:'Glacier hike on Sólheimajökull with a guide — crampons, ice axes, crevasses.',afternoon:'Jökulsárlón Glacier Lagoon — iceberg-filled lake with seals on blue ice.',evening:'Diamond Beach — black sand covered in glowing icebergs at sunset.'},
+     {theme:'Snæfellsnes Peninsula',emoji:'🐋',morning:'Drive to Snæfellsjökull glacier volcano (Jules Verne\'s inspiration).',afternoon:'Whale watching from Grundarfjörður — humpbacks, minkes, and orcas.',evening:'Fresh king crab feast at a harbor restaurant. Check northern lights again.'},
+     {theme:'The Highlands',emoji:'🌄',morning:'Landmannalaugar highland area (summer only) — colorful rhyolite mountains.',afternoon:'Natural hot spring bathing in a geothermal river surrounded by lunar landscape.',evening:'Back to Reykjavík. Bar-hop on Laugavegur — surprisingly vibrant nightlife.'},
+     {theme:'Blue Lagoon & Depart',emoji:'💧',morning:'Blue Lagoon (book ahead!) — soak in 38°C milky geothermal waters.',afternoon:'Silica mud mask, swim-up bar, floating in geothermal bliss.',evening:'Direct to Keflavík airport. You\'ve seen another planet.'}
+   ],
+   tips:[{icon:'🌌',text:'Northern lights: September–March, clear sky needed. Download "Aurora Forecast" app.'},{icon:'🚗',text:'A rental car is essential outside Reykjavík — public transport barely exists. Book a 4WD.'},{icon:'💰',text:'Iceland is expensive. Save money: grocery meals, free waterfalls, legal wild camping.'},{icon:'🌡️',text:'Weather changes in minutes. Pack waterproof everything and merino wool base layers.'},{icon:'⚠️',text:'NEVER walk off marked paths near geothermal areas — the crust can be dangerously thin.'}],
+   packing:{'👗 Clothing':['Waterproof hiking jacket','Waterproof pants','Merino wool base layers','Thermal gloves + hat','Hiking boots'],'💊 Health':['Lip balm (high wind)','Seasickness tablets (whale watching)','Sunscreen (midnight sun)'],'📱 Tech':['Aurora Forecast app','Offline Iceland maps','Rugged phone case','Cold-weather battery pack']},
+   altId:'newzealand'},
+
+  {id:'thailand',name:'Bangkok',country:'🇹🇭 Thailand · Southeast Asia',emoji:'🛺',
+   tagline:'"Where ancient temples glow gold beside neon-lit markets that never, ever sleep."',
+   profile:{ra:-2,cn:-6,di:9,lb:8,fa:-8,sg:5},
+   photo:'1508009603885-50cf7c579365',
+   grad:'linear-gradient(160deg,#FF6B35,#FFD700,#FF1493)',
+   budget:{flights:520,accommodation:270,food:110,activities:160,transport:55,shopping:160},
+   itinerary:[
+     {theme:'Arrival & Street Food Baptism',emoji:'🍜',morning:'Land at Suvarnabhumi. Uber to your Silom/Sukhumvit hotel.',afternoon:'Sam Yan market — pad see ew, mango sticky rice, too much pad thai.',evening:'Khao San Road — the legendary backpacker street. Buckets, loud music, life.'},
+     {theme:'Temple Trail',emoji:'🛕',morning:'Wat Phra Kaew (Grand Palace) and the Emerald Buddha — most sacred in Thailand.',afternoon:'Ferry to Wat Arun (Temple of Dawn) — mosaic spires gleaming across the river.',evening:'Sunset river cruise. Tom yum from a floating kitchen boat. Only in Bangkok.'},
+     {theme:'Chatuchak & Shopping',emoji:'🛍️',morning:'Chatuchak Weekend Market — 15,000 stalls selling literally everything imaginable.',afternoon:'MBK Center or Siam Paragon for designer brands at real prices.',evening:'Rooftop bar at Vertigo (Banyan Tree) — 61 floors above the Bangkok skyline.'},
+     {theme:'Day Trip to Ayutthaya',emoji:'🏯',morning:'Train to Ayutthaya — ancient capital, UNESCO Buddhist ruins.',afternoon:'Tuk-tuk to Wat Mahathat (the famous buddha-head-in-tree photo).',evening:'Return to Bangkok. Thai massage (1 hour, $5) on Silom Road.'},
+     {theme:'Floating Markets & Canals',emoji:'⛵',morning:'Damnoen Saduak floating market — boats loaded with fruits and steaming noodles.',afternoon:'Maeklong Railway Market — train literally drives through an active market.',evening:'Yaowarat (Chinatown) — crab dim sum, roast duck, durian ice cream.'},
+     {theme:'Muay Thai & Wellness',emoji:'🥊',morning:'Muay Thai training class — get punched by a small, terrifyingly strong person.',afternoon:'Thai herbal steam room and traditional massage at a proper spa.',evening:'Asiatique The Riverfront — riverside night market with the Calypso cabaret show.'},
+     {theme:'Day Trip or Departure',emoji:'✈️',morning:'Final street food lap — khao man gai, roti with condensed milk, fresh coconut.',afternoon:'Chatuchak one last time or Lumphini Park for something calm.',evening:'Airport transfer. Bags twice the weight from shopping. Zero regrets.'}
+   ],
+   tips:[{icon:'🌡️',text:'Bangkok is very hot year-round (30–40°C). Carry a small towel and drink water constantly.'},{icon:'👚',text:'Cover shoulders and knees at temples — always. Keep a sarong in your bag.'},{icon:'🛺',text:'Negotiate tuk-tuk prices before getting in. Or use Grab app — much easier and fair.'},{icon:'💊',text:'Tap water is not safe. Drink bottled only. Ice in established restaurants is generally fine.'},{icon:'💸',text:'Everything is cheaper than you think. Budget $10–15/day for all food and eat amazingly.'}],
+   packing:{'👗 Clothing':['Lightweight breathable cotton','Sarong (temples)','Flip flops + walking shoes','Compact umbrella'],'💊 Health':['DEET mosquito repellent','Antidiarrhea tablets','Sunscreen','Rehydration salts'],'📱 Tech':['Local SIM (buy at airport)','Grab app downloaded','Universal adapter']},
+   altId:'bali'},
+
+  {id:'santorini',name:'Santorini',country:'🇬🇷 Greece · Mediterranean',emoji:'🌅',
+   tagline:'"Blue domes, white walls, sunsets so vivid they will ruin every other sunset forever."',
+   profile:{ra:-6,cn:2,di:9,lb:-6,fa:-2,sg:2},
+   photo:'1507525428034-b723cf961d3e',
+   grad:'linear-gradient(160deg,#FF6B6B,#F7C59F,#4ECDC4)',
+   budget:{flights:640,accommodation:1300,food:420,activities:220,transport:110,shopping:220},
+   itinerary:[
+     {theme:'Arrival & Oia Discovery',emoji:'🌅',morning:'Fly into Santorini. Transfer to Oia — the village with the iconic dome views.',afternoon:'Check into a cave hotel carved into the cliffside if budget allows.',evening:'Famous Oia sunset — arrive 2 hours early for a good spot. Dinner at caldera-view restaurant.'},
+     {theme:'Caldera Boat Tour',emoji:'⛵',morning:'Catamaran trip around the caldera — swim in hot springs, snorkel in crystal water.',afternoon:'Akrotiri — Minoan ruins buried by the volcano 3,600 years ago. "Aegean Pompeii."',evening:'Wine tasting at Santo Wines on the cliff edge as the sky turns pink.'},
+     {theme:'Fira & History',emoji:'🏛️',morning:'Walk the Fira to Oia cliffside path (10km, 3hr) — most scenic walk in the Aegean.',afternoon:'Fira town: Museum of Prehistoric Thera, Greek Orthodox Cathedral.',evening:'Fresh seafood at a traditional taverna. Lobster pasta is the local specialty.'},
+     {theme:'Hidden Beaches',emoji:'🏖️',morning:'Red Beach — red volcanic sand cliffs, stunning alien landscape.',afternoon:'Perissa Black Sand Beach — long, dramatic, with beach clubs and crystal water.',evening:'ATV ride around the island at sunset — hair-raising roads, breathtaking views.'},
+     {theme:'Wine Country',emoji:'🍷',morning:'Vineyards tour: Assyrtiko white wine, grown in basket-shaped vines to survive wind.',afternoon:'Pyrgos village — medieval towers and the highest point on the island.',evening:'Private sunset dinner at a cliff-edge restaurant. The kind that changes you.'},
+     {theme:'Relaxation Day',emoji:'🧘',morning:'Yoga at sunrise on the terrace with caldera views.',afternoon:'Luxury spa treatment — local honey, volcanic clay, seawater pool.',evening:'Cooking class — moussaka, spanakopita, and a proper Greek salad (no lettuce!).'},
+     {theme:'Final Sunrise & Departure',emoji:'✈️',morning:'Final sunrise over the caldera. Try to memorize every color.',afternoon:'Last frappe coffee in Oia. Souvenir ceramics and local olive oil.',evening:'Transfer to airport. Part of your soul stays on this cliff forever.'}
+   ],
+   tips:[{icon:'📸',text:'Iconic blue dome photo in Oia: go before 8 AM or after 6 PM — midday has 200+ people in frame.'},{icon:'🚌',text:'Rent an ATV ($20/day) or use local buses. Taxis are scarce and expensive.'},{icon:'☀️',text:'July–August is scorching and overcrowded. Prefer May–June or September–October.'},{icon:'💍',text:'World\'s top honeymoon destination. Mention it to your hotel for possible upgrades!'},{icon:'🍅',text:'Try Santorini tomatoes (sun-dried, intense flavor), white eggplant, and local fava.'}],
+   packing:{'👗 Clothing':['White and blue outfits (you\'ll want to match)','Good sun hat','Wedge sandals (cobblestones)','Light linen'],'💊 Health':['Very high SPF (intense sun)','Polarized sunglasses','After-sun lotion'],'📱 Tech':['Good camera (1000+ photos guaranteed)','Wide-angle lens','GoPro for boat day']},
+   altId:'maldives'},
+
+  {id:'nyc',name:'New York City',country:'🇺🇸 USA · North America',emoji:'🗽',
+   tagline:'"Eight million stories and none of them are boring. The city that refuses to sleep."',
+   profile:{ra:0,cn:-9,di:9,lb:-3,fa:-2,sg:5},
+   photo:'1496442226666-8d4d0e62e6e9',
+   grad:'linear-gradient(160deg,#4C6EF5,#FF6B6B,#FFD700)',
+   budget:{flights:520,accommodation:1600,food:530,activities:320,transport:210,shopping:440},
+   itinerary:[
+     {theme:'Manhattan Arrival',emoji:'🗽',morning:'Taxi from JFK to Midtown. Walk to Central Park, lunch at The Loeb Boathouse.',afternoon:'Metropolitan Museum of Art — Egyptian Wing, Impressionist collection, rooftop views.',evening:'Sunset from Top of the Rock at 30 Rock — better than Empire State, more affordable.'},
+     {theme:'Downtown Classics',emoji:'🌉',morning:'Brooklyn Bridge walk (start from Brooklyn side, coffee at Grimaldi\'s below).',afternoon:'DUMBO neighborhood, then Staten Island Ferry (free!) for Statue of Liberty view.',evening:'Wall Street, Charging Bull, then dinner in a financial district speakeasy.'},
+     {theme:'Brooklyn Cultural Day',emoji:'🎨',morning:'Brooklyn Museum — one of the largest art museums in the US.',afternoon:'Prospect Park, Brooklyn Botanical Garden, Smorgasburg food market (weekends).',evening:'Williamsburg — craft cocktails, live music, the hippest food scene in New York.'},
+     {theme:'Times Square & Broadway',emoji:'🎭',morning:'High Line park — elevated railway turned garden above the Meatpacking District.',afternoon:'Chelsea Market food hall. Wander the Meatpacking District.',evening:'Broadway show — book weeks ahead for Hamilton, Wicked, or The Lion King.'},
+     {theme:'Harlem & The Bronx',emoji:'🎵',morning:'Harlem tour — Apollo Theater, soul food brunch at Sylvia\'s, Marcus Garvey Park.',afternoon:'New York Botanical Garden or Bronx Zoo (largest urban zoo in the world).',evening:'Jazz club in Harlem (Blue Note) — live music that fills your bones.'},
+     {theme:'Queens Food Adventure',emoji:'🌮',morning:'Jackson Heights, Queens — most ethnically diverse neighborhood on Earth. Indian, Nepali, Colombian.',afternoon:'Flushing Chinatown — dumplings, scallion pancakes, boba tea.',evening:'Rooftop party in Long Island City with unmatched Manhattan skyline views.'},
+     {theme:'SoHo & Goodbye',emoji:'🛍️',morning:'SoHo shopping — cast-iron architecture, Balenciaga beside vintage shops.',afternoon:'Greenwich Village and Washington Square Park. The Strand bookshop (18 miles of books!).',evening:'Final NYC steakhouse dinner. Taxi to JFK. The city watches you leave.'}
+   ],
+   tips:[{icon:'🚇',text:'Use OMNY contactless payment on the subway — tap in with your phone or card.'},{icon:'🍕',text:'Best pizza: Joe\'s Pizza, West Village. Get a slice, fold in half, eat while walking.'},{icon:'💵',text:'Tip 18–20% at restaurants, $2–5 for taxis, $1 per drink at bars. It\'s not optional.'},{icon:'🗝️',text:'Book restaurants 2–4 weeks ahead — the best NYC spots sell out immediately on Resy.'},{icon:'👟',text:'Walk everywhere you can — NYC is a pedestrian city and feet are often faster than Uber.'}],
+   packing:{'👗 Clothing':['Smart casual layers','Comfortable walking shoes','Rain jacket','Evening smart wear for Broadway'],'💊 Health':['Blister plasters (15+ miles/day)','Earplugs (NYC never sleeps)','Cold and flu tablets'],'📱 Tech':['Good earbuds','Credit card with no foreign fees','Offline NYC subway map']},
+   altId:'barcelona'},
+
+  {id:'kyoto',name:'Kyoto',country:'🇯🇵 Japan · East Asia',emoji:'⛩️',
+   tagline:'"Zen gardens, geisha footsteps, 1,600 temples — Japan\'s eternal, golden soul."',
+   profile:{ra:-2,cn:3,di:9,lb:0,fa:-1,sg:-5},
+   photo:'1528360983277-13d401cdc186',
+   grad:'linear-gradient(160deg,#C9184A,#FF5C8A,#9D4EDD)',
+   budget:{flights:720,accommodation:640,food:260,activities:160,transport:160,shopping:220},
+   itinerary:[
+     {theme:'Geisha District & Arrival',emoji:'🌸',morning:'Arrive, check into ryokan. Wear yukata, sleep on futon. Absolute magic.',afternoon:'Gion district afternoon walk — most likely area to spot a real maiko.',evening:'Dinner at a kaiseki restaurant — a 10-course Japanese tasting menu. Ethereal.'},
+     {theme:'Thousand Torii Gates',emoji:'⛩️',morning:'Fushimi Inari Shrine at dawn — thousands of vermillion gates into the forest.',afternoon:'Nishiki Market ("Kyoto\'s Kitchen") — pickles, takoyaki, matcha soft-serve.',evening:'Pontocho dining alley — narrow lantern-lit lane with hidden restaurants.'},
+     {theme:'Zen Gardens & Philosophy',emoji:'🍃',morning:'Ryoanji Temple — the world\'s most famous rock garden. Sit in silence.',afternoon:'Kinkaku-ji (Golden Pavilion) reflected in the pond. Prepare to gasp.',evening:'Sake brewery tour in Fushimi — taste 5 different grades of Japan\'s national drink.'},
+     {theme:'Arashiyama Bamboo Forest',emoji:'🎋',morning:'Arashiyama Bamboo Grove before 7 AM — just you and the swaying bamboo.',afternoon:'Tenryu-ji Garden, then boat ride down the Oi River through maple mountains.',evening:'Monkey Park — Japanese macaques roaming freely against Kyoto mountain backdrop.'},
+     {theme:'Tea Ceremony & Temples',emoji:'🍵',morning:'Traditional tea ceremony — learn the philosophy of Japanese aesthetics (wabi-sabi).',afternoon:'Nijo Castle — the shogun\'s palace with "nightingale floors" that squeak to detect assassins.',evening:'Sunset at Kiyomizudera Temple — the wooden stage jutting out over the hillside.'},
+     {theme:'Day Trip to Nara',emoji:'🦌',morning:'30-min train to Nara — sacred deer will literally bow to you for crackers.',afternoon:'Todai-ji Temple — world\'s largest wooden structure, giant bronze Buddha inside.',evening:'Return to Kyoto. Machiya (traditional townhouse) bar for natural sake tasting.'},
+     {theme:'Imperial Gardens & Farewell',emoji:'🌸',morning:'Imperial Palace and its expansive gardens — peaceful morning stroll.',afternoon:'Last matcha in a tranquil garden café. Buy wagashi (Japanese confections) as gifts.',evening:'Farewell kaiseki dinner. Shinkansen to Tokyo or airport. Arigatou, Kyoto.'}
+   ],
+   tips:[{icon:'🌸',text:'Cherry blossom season (March–April) is magical but very crowded — book a year ahead.'},{icon:'🦌',text:'Nara\'s deer will bow if you bow first — it\'s not a myth. Google it before you go.'},{icon:'🎎',text:'Never chase or photograph geisha on the street. It\'s considered very rude.'},{icon:'🚌',text:'Get a Kyoto City Bus 1-day pass — covers almost all major temples for ¥700.'},{icon:'☀️',text:'Best seasons: March–May (cherry blossoms) or November (crimson maple leaves).'}],
+   packing:{'👗 Clothing':['Comfortable shoes for temple walking','Slip-on shoes (ryokan etiquette)','Modest dress','Scarf for cool mornings'],'💊 Health':['Hayfever tablets (cherry blossom)','Comfortable insoles','Blister plasters'],'📱 Tech':['Suica/Pasmo IC card','Good camera for temples','Pocket WiFi']},
+   altId:'tokyo'},
+
+  {id:'costarica',name:'Costa Rica',country:'🇨🇷 Costa Rica · Central America',emoji:'🦋',
+   tagline:'"Pure life, pure wilderness — where monkeys roar at dawn and sloths judge you lazily."',
+   profile:{ra:8,cn:9,di:9,lb:2,fa:7,sg:1},
+   photo:'1518709268805-4e9042af9f23',
+   grad:'linear-gradient(160deg,#00C853,#00BFA5,#FFD600)',
+   budget:{flights:630,accommodation:520,food:210,activities:430,transport:210,shopping:110},
+   itinerary:[
+     {theme:'San José & Arrival',emoji:'🌋',morning:'Arrive at Juan Santamaría. Visit downtown San José and the Central Market.',afternoon:'Drive to Arenal Volcano region. Your room has volcano views.',evening:'Hot springs soak at Tabacón — fed by actual volcano water. Howler monkeys above.'},
+     {theme:'Arenal Adventure',emoji:'⛰️',morning:'White-water rafting on the Balsa River — Class III–IV rapids through jungle gorges.',afternoon:'Hanging bridges walk in Arenal Volcano National Park — canopy-level wildlife.',evening:'Chocolate tour at a local farm — raw cacao to finished bar. Taste everything.'},
+     {theme:'Monteverde Cloud Forest',emoji:'🌫️',morning:'Sky tram and canopy zip-lining above the cloud forest — 450m of tree-top views.',afternoon:'Monteverde Cloud Forest Reserve — look for the resplendent quetzal (stunning bird).',evening:'Night hike to see nocturnal wildlife — glass frogs, tarantulas, sleeping toucans.'},
+     {theme:'Pacific Coast — Manuel Antonio',emoji:'🌊',morning:'Drive to Manuel Antonio. Spot monkeys, sloths, and coatis at the national park.',afternoon:'Catamaran trip with snorkeling, dolphin watching, and beach BBQ.',evening:'Sunset on the beach with a fresh coconut. Pura vida.'},
+     {theme:'Water & Waves',emoji:'🏄',morning:'Surf lesson at Dominical or Jacó beach with a local instructor.',afternoon:'Kayaking through coastal mangroves — spot crocodiles and exotic birds.',evening:'Seafood dinner in a beachside restaurant. Ceviche, sea bass, tropical cocktails.'},
+     {theme:'Tortuguero Jungle',emoji:'🐢',morning:'Boat through jungle canals to Tortuguero — the "Amazon of Costa Rica."',afternoon:'Wildlife boat tour: river otters, caimans, poison dart frogs, spider monkeys.',evening:'Sea turtle nesting watch (July–October) — 300lb leatherbacks laying eggs by moonlight.'},
+     {theme:'Rainforest Finale',emoji:'🌿',morning:'Early bird hike — best wildlife hours are 5–8 AM when everything is active.',afternoon:'Coffee farm tour — learn the entire process from cherry to cup.',evening:'Final drinks at a jungle bar. Transfer back to San José for departure.'}
+   ],
+   tips:[{icon:'🐍',text:'Wear long pants and closed shoes in the rainforest. Shake out shoes each morning.'},{icon:'🚌',text:'Rent a 4WD — many roads to jungle lodges are unpaved and require high clearance.'},{icon:'💉',text:'Get vaccinations before travel: Hepatitis A and typhoid are recommended.'},{icon:'☀️',text:'Best season: December–April (dry). May–November is lush and green with some rain.'},{icon:'🦥',text:'Best wildlife tip: hire a local guide. They spot things invisible to untrained eyes.'}],
+   packing:{'👗 Clothing':['Quick-dry clothes','Waterproof hiking boots','Rain poncho','Swimwear','Long sleeves (insect protection)'],'💊 Health':['DEET insect repellent (heavy duty)','Antimalarial tablets (check doctor)','Water purification','Anti-itch cream'],'📱 Tech':['Waterproof bag/case','Binoculars','Wildlife ID app','Rugged phone case']},
+   altId:'newzealand'},
+
+  {id:'newzealand',name:'New Zealand',country:'🇳🇿 New Zealand · Pacific',emoji:'🥝',
+   tagline:'"The most cinematic country on Earth — every road is a Lord of the Rings scene waiting."',
+   profile:{ra:7,cn:9,di:9,lb:0,fa:8,sg:-2},
+   photo:'1507699622108-4be3abd695ad',
+   grad:'linear-gradient(160deg,#00B894,#0984E3,#6C5CE7)',
+   budget:{flights:1150,accommodation:740,food:310,activities:530,transport:320,shopping:160},
+   itinerary:[
+     {theme:'Auckland Arrival',emoji:'🦅',morning:'Land in Auckland. Sky Tower for panoramic views. Walk along Viaduct Harbour.',afternoon:'Waiheke Island ferry — stunning vineyards, olive groves, and beautiful beaches.',evening:'Fresh seafood dinner in Auckland\'s Ponsonby neighborhood. The NZ white wine is exceptional.'},
+     {theme:'Hobbiton & Rotorua',emoji:'🧙',morning:'Drive south to Hobbiton Movie Set — literally walk through the Shire from LOTR.',afternoon:'Rotorua: bubbling mud pools, geysers, and the distinct smell of sulphur.',evening:'Traditional Māori hāngī feast and cultural performance — haka dance, poi, storytelling.'},
+     {theme:'Tongariro Alpine Crossing',emoji:'🌋',morning:'Tongariro Alpine Crossing — 19km hike past active volcanoes, emerald crater lakes.',afternoon:'Reach Emerald Lakes for lunch — bright turquoise mineral pools in volcanic ash.',evening:'Recovery soak in natural hot springs. Collapse. Worth every step.'},
+     {theme:'Wellington & Culture',emoji:'🎨',morning:'Drive to Wellington. Te Papa Tongarewa Museum — brilliant Māori culture exhibits.',afternoon:'Weta Workshop tour — where Gollum, Gandalf, and Frodo were brought to life.',evening:'Cuba Street nightlife — Wellington has the best café and bar scene per capita on Earth.'},
+     {theme:'Marlborough Wine Country',emoji:'🍷',morning:'Ferry across Cook Strait (spectacular scenery!) to the South Island.',afternoon:'Marlborough wine trail — world\'s best Sauvignon Blanc grows right here.',evening:'Fresh crayfish (New Zealand lobster) at a harbor restaurant. Outstanding.'},
+     {theme:'Queenstown Adventure Capital',emoji:'🪂',morning:'Fly or drive to Queenstown. Bungee jump at the Nevis — 134m, highest in Australasia.',afternoon:'Jet boat through Shotover River Canyons at 85km/h — inches from canyon walls.',evening:'Reflection at Queenstown\'s mirror-still lake. Then steak at a lakefront restaurant.'},
+     {theme:'Fiordland & Milford Sound',emoji:'🏔️',morning:'Day cruise on Milford Sound — waterfalls cascade 2000m straight into the dark fjord.',afternoon:'Spot fur seals, Fiordland penguins, and dolphins playing in the bow wave.',evening:'Flight back to Auckland for departure. A country you\'ll definitely return to.'}
+   ],
+   tips:[{icon:'🚗',text:'Drive the South Island yourself — rent a campervan for total freedom and the best experience.'},{icon:'🌧️',text:'NZ weather is unpredictable year-round. Always carry a rain jacket and dress in layers.'},{icon:'🎟️',text:'Book Tongariro Crossing shuttles and Milford Sound cruises weeks ahead — they sell out.'},{icon:'🥝',text:'Best season: December–February for hiking. June–August for skiing. Wine is year-round.'},{icon:'🦟',text:'South Island sandflies are brutal. Bring very strong insect repellent for Fiordland.'}],
+   packing:{'👗 Clothing':['Waterproof hiking jacket','Warm fleece','Moisture-wicking base layers','Sturdy hiking boots','Shorts + tees'],'💊 Health':['Sandfly repellent (essential for South Island)','Muscle recovery tablets','Blister plasters for long hikes'],'📱 Tech':['Offline NZ maps (cell coverage is sparse)','GoPro for activities','Rugged waterproof case']},
+   altId:'costarica'}
+];
+
+/* =====================================================
+   APP STATE
+===================================================== */
+const S={
+  cur:0,
+  scores:{ra:0,cn:0,di:0,lb:0,fa:0,sg:0},
+  maxP:{ra:0,cn:0,di:0,lb:0,fa:0,sg:0},
+  answers:[],
+  chart:null
+};
+
+/* =====================================================
+   UTILS
+===================================================== */
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function photoUrl(id,w=900){
+  return`https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
+}
+function fmt(n){return'$'+n.toLocaleString();}
+
+/* =====================================================
+   PARTICLES
+===================================================== */
+const EMOJIS=['✈️','🌍','🏖️','🏔️','🗺️','🛕','🎭','🌅','🏝️','🗽','⛩️','🌋','🧳','🌴'];
+function spawnParticles(){
+  const c=document.getElementById('ptcl');
+  EMOJIS.forEach(e=>{
+    const d=document.createElement('div');
+    d.className='particle'; d.textContent=e;
+    d.style.left=`${Math.random()*95}%`;
+    d.style.animationDuration=`${14+Math.random()*18}s`;
+    d.style.animationDelay=`${-Math.random()*20}s`;
+    d.style.fontSize=`${1.1+Math.random()*1}rem`;
+    c.appendChild(d);
+  });
+}
+
+/* =====================================================
+   SIDEBAR BUILD
+===================================================== */
+function buildSidebar(){
+  const wrap=document.getElementById('axes-wrap');
+  wrap.innerHTML=AXES.map(a=>`
+    <div class="axis-item" id="ax-${a.key}">
+      <div class="axis-heads">
+        <span class="axis-head">${a.l1}</span>
+        <span class="axis-head">${a.l2}</span>
+      </div>
+      <div class="axis-track">
+        <div class="axis-fill" id="axf-${a.key}" style="width:50%;background:${a.color};"></div>
+      </div>
+      <div class="axis-lean" id="axl-${a.key}" style="color:${a.color};">Neutral</div>
+    </div>
+  `).join('');
+}
+
+/* =====================================================
+   DISPLAY QUESTION
+===================================================== */
+function displayQ(){
+  const q=QUESTIONS[S.cur];
+  const pct=Math.round((S.cur/QUESTIONS.length)*100);
+  document.getElementById('qn-label').textContent=`Round ${S.cur+1} of ${QUESTIONS.length}`;
+  document.getElementById('qn-pct').textContent=`${pct}%`;
+  document.getElementById('qn-round').textContent=`${S.cur+1} / ${QUESTIONS.length}`;
+  document.getElementById('qn-fill').style.width=`${pct}%`;
+  document.getElementById('q-cat').textContent=q.cat;
+  document.getElementById('q-text').textContent=q.text;
+  // A
+  document.getElementById('emoji-a').textContent=q.a.emoji;
+  document.getElementById('title-a').textContent=q.a.title;
+  document.getElementById('desc-a').textContent=q.a.desc;
+  document.getElementById('tags-a').innerHTML=q.a.tags.map(t=>`<span class="cc-tag">${t}</span>`).join('');
+  // B
+  document.getElementById('emoji-b').textContent=q.b.emoji;
+  document.getElementById('title-b').textContent=q.b.title;
+  document.getElementById('desc-b').textContent=q.b.desc;
+  document.getElementById('tags-b').innerHTML=q.b.tags.map(t=>`<span class="cc-tag">${t}</span>`).join('');
+  // animate
+  const ca=document.getElementById('card-a');
+  const cb=document.getElementById('card-b');
+  [ca,cb].forEach(c=>{c.classList.remove('winner','dimmed','slide-in');});
+  ca.style.pointerEvents=''; cb.style.pointerEvents='';
+  void ca.offsetWidth;
+  ca.classList.add('slide-in'); cb.classList.add('slide-in');
+}
+
+/* =====================================================
+   PICK CHOICE
+===================================================== */
+function pickChoice(side){
+  if(S.cur>=QUESTIONS.length) return;
+  const q=QUESTIONS[S.cur];
+  const ca=document.getElementById('card-a');
+  const cb=document.getElementById('card-b');
+  ca.style.pointerEvents='none'; cb.style.pointerEvents='none';
+
+  if(side!=='skip'){
+    const w=side==='a'?q.a.w:q.b.w;
+    AXES.forEach(ax=>{S.scores[ax.key]+=(w[ax.key]||0);});
+    const winner=side==='a'?ca:cb;
+    const loser=side==='a'?cb:ca;
+    winner.classList.add('winner');
+    loser.classList.add('dimmed');
+  }
+
+  AXES.forEach(ax=>{
+    const wa=Math.abs(q.a.w[ax.key]||0);
+    const wb=Math.abs(q.b.w[ax.key]||0);
+    S.maxP[ax.key]+=Math.max(wa,wb);
+  });
+
+  S.answers.push({q:q.id,choice:side});
+
+  setTimeout(()=>{
+    S.cur++;
+    updateSidebar();
+    if(S.cur>=QUESTIONS.length) showLoading();
+    else displayQ();
+  },480);
+}
+
+/* =====================================================
+   UPDATE SIDEBAR
+===================================================== */
+function updateSidebar(){
+  AXES.forEach(ax=>{
+    const mx=S.maxP[ax.key]||1;
+    const raw=S.scores[ax.key];
+    const pct=50+(raw/mx)*50;
+    const fill=document.getElementById(`axf-${ax.key}`);
+    const lean=document.getElementById(`axl-${ax.key}`);
+    if(fill) fill.style.width=`${Math.min(100,Math.max(0,pct))}%`;
+    if(lean){
+      if(raw<-0.5) lean.textContent=ax.l1.replace(/[^\w\s]/gi,'').trim();
+      else if(raw>0.5) lean.textContent=ax.l2.replace(/[^\w\s]/gi,'').trim();
+      else lean.textContent='Balanced';
+    }
+  });
+  if(S.cur>=3){
+    const top=rankDests()[0];
+    const d=DESTS.find(x=>x.id===top.id);
+    if(d){
+      document.getElementById('dest-preview-box').classList.add('show');
+      document.getElementById('dpb-emoji').textContent=d.emoji;
+      document.getElementById('dpb-name').textContent=d.name;
+    }
+    const tips=[
+      `You\'re leaning ${S.scores.ra<0?'relaxation 🧘':'adventure 🏃'}!`,
+      `${S.scores.cn<0?'City vibes call you 🌆':'Nature is your home 🌿'}.`,
+      `You prefer ${S.scores.lb<0?'going all out 💎':'traveling smart 🎒'}.`,
+      `${S.scores.fa<0?'Foodie at heart 🍜':'Activities over appetizers 🪂'} — noted!`,
+      `${S.scores.sg<0?'Independent soul 🧘':'Social butterfly 🥂'}, classic.`,
+    ];
+    document.getElementById('sb-tip').textContent=tips[(S.cur-3)%tips.length];
+  }
+}
+
+/* =====================================================
+   RANK DESTINATIONS
+===================================================== */
+function rankDests(){
+  const user={};
+  AXES.forEach(ax=>{
+    const mx=S.maxP[ax.key]||1;
+    user[ax.key]=(S.scores[ax.key]/mx)*10;
+  });
+  return DESTS.map(d=>{
+    let dist=0;
+    AXES.forEach(ax=>{
+      const diff=(user[ax.key]||0)-(d.profile[ax.key]||0);
+      dist+=diff*diff;
+    });
+    const maxDist=AXES.length*400;
+    const match=Math.round((1-Math.sqrt(dist)/Math.sqrt(maxDist))*100);
+    return{id:d.id,dist,match};
+  }).sort((a,b)=>a.dist-b.dist);
+}
+
+/* =====================================================
+   LOADING
+===================================================== */
+function showLoading(){
+  show('loading-screen');
+  const fill=document.getElementById('load-fill');
+  let step=0;
+  const iv=setInterval(()=>{
+    if(step<4){
+      const el=document.getElementById(`ls-${step}`);
+      el.classList.add('done');
+      el.querySelector('.ls-ic').textContent='✅';
+      fill.style.width=`${(step+1)*25}%`;
+      step++;
+    }else{
+      clearInterval(iv);
+      setTimeout(buildResults,400);
+    }
+  },580);
+}
+
+/* =====================================================
+   BUILD RESULTS
+===================================================== */
+let bChart=null;
+function buildResults(){
+  const ranked=rankDests();
+  const destData=DESTS.find(d=>d.id===ranked[0].id);
+  const altData=DESTS.find(d=>d.id===ranked[1].id)||DESTS.find(d=>d.id===destData.altId);
+
+  show('results-screen');
+
+  /* Hero */
+  const heroImg=document.getElementById('r-img');
+  heroImg.style.background=destData.grad;
+  const himg=new Image();
+  himg.onload=()=>{heroImg.style.backgroundImage=`url(${himg.src})`;heroImg.style.backgroundSize='cover';};
+  himg.src=photoUrl(destData.photo);
+
+  document.getElementById('r-name').textContent=destData.name;
+  document.getElementById('r-country').textContent=destData.country;
+  document.getElementById('r-tagline').textContent=destData.tagline;
+  const mp=Math.min(100,ranked[0].match);
+  document.getElementById('r-match-fill').style.width=`${mp}%`;
+  document.getElementById('r-match-pct').textContent=`${mp}% match`;
+
+  /* DNA grid */
+  const user={};
+  AXES.forEach(ax=>{
+    const mx=S.maxP[ax.key]||1;
+    user[ax.key]=(S.scores[ax.key]/mx)*10;
+  });
+  document.getElementById('dna-grid').innerHTML=AXES.map(ax=>{
+    const dPct=50+(destData.profile[ax.key]/10)*50;
+    const diff=Math.abs((50+(user[ax.key]/10)*50)-dPct);
+    const matchLbl=diff<10?'✨ Perfect match':diff<25?'👍 Great match':'🔄 Complementary';
+    return`<div class="dna-card">
+      <div class="dna-labels"><span>${ax.l1}</span><span>${ax.l2}</span></div>
+      <div class="dna-track"><div class="dna-fill" style="width:${dPct.toFixed(0)}%;background:${ax.color};"></div></div>
+      <div class="dna-match-txt">${matchLbl}</div>
+    </div>`;
+  }).join('');
+
+  /* Alt destination */
+  const altThumb=document.getElementById('alt-thumb');
+  altThumb.style.background=altData.grad;
+  const aimg=new Image();
+  aimg.onload=()=>{altThumb.style.backgroundImage=`url(${aimg.src})`;altThumb.style.backgroundSize='cover';};
+  aimg.src=photoUrl(altData.photo,400);
+  document.getElementById('alt-name').textContent=altData.name;
+  document.getElementById('alt-country').textContent=altData.country;
+  document.getElementById('alt-line').textContent=altData.tagline.replace(/"/g,'');
+  document.getElementById('alt-pct').textContent=`${Math.min(100,ranked[1].match)}%`;
+
+  /* Budget chart */
+  const b=destData.budget;
+  const total=Object.values(b).reduce((s,v)=>s+v,0);
+  document.getElementById('r-total').textContent=fmt(total);
+  const BK=['flights','accommodation','food','activities','transport','shopping'];
+  const BL=['✈️ Flights','🏨 Hotels','🍽️ Food','🎯 Activities','🚌 Transport','🛍️ Shopping'];
+  const BC=['#FF6B6B','#FF9F43','#FFD93D','#10B981','#38BDF8','#8B5CF6'];
+  if(bChart){bChart.destroy();bChart=null;}
+  const ctx=document.getElementById('budget-chart').getContext('2d');
+  bChart=new Chart(ctx,{
+    type:'doughnut',
+    data:{
+      labels:BL,
+      datasets:[{data:BK.map(k=>b[k]),backgroundColor:BC,borderColor:'#FFFFFF',borderWidth:4,hoverOffset:12}]
+    },
+    options:{
+      cutout:'68%',
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:c=>` ${c.label.replace(/✈️|🏨|🍽️|🎯|🚌|🛍️/g,'').trim()}: ${fmt(c.raw)}`}}
+      },
+      animation:{duration:1000,easing:'easeInOutQuart'}
+    }
+  });
+  document.getElementById('blist').innerHTML=BK.map((k,i)=>`
+    <div class="brow">
+      <div class="bdot" style="background:${BC[i]};"></div>
+      <div class="blabel">${BL[i]}</div>
+      <div class="bamount">${fmt(b[k])}</div>
+    </div>`).join('');
+
+  /* Itinerary */
+  const DC=['#FF6B6B','#FF9F43','#FFD93D','#10B981','#38BDF8','#8B5CF6','#F472B6'];
+  document.getElementById('itin-list').innerHTML=destData.itinerary.map((day,i)=>`
+    <div class="itin-day" id="iday-${i}">
+      <div class="iday-header" onclick="toggleDay(${i})">
+        <div class="iday-num" style="background:${DC[i]}22;color:${DC[i]};">D${i+1}</div>
+        <div class="iday-info">
+          <div class="iday-title">${day.emoji} Day ${i+1}: ${day.theme}</div>
+          <div class="iday-sub">Morning · Afternoon · Evening</div>
+        </div>
+        <div class="iday-chevron">▼</div>
+      </div>
+      <div class="iday-body">
+        <div class="slot-list">
+          ${mkSlot('🌅 Morning',day.morning,DC[i])}
+          ${mkSlot('☀️ Afternoon',day.afternoon,DC[i])}
+          ${mkSlot('🌙 Evening',day.evening,DC[i])}
+        </div>
+      </div>
+    </div>`).join('');
+
+  /* Tips */
+  document.getElementById('tips-grid').innerHTML=destData.tips.map(t=>`
+    <div class="tip-card">
+      <div class="tip-icon">${t.icon}</div>
+      <div class="tip-txt">${t.text}</div>
+    </div>`).join('');
+
+  /* Packing */
+  const pcColors={'👗 Clothing':'#F472B6','💊 Health':'#10B981','📱 Tech':'#38BDF8'};
+  document.getElementById('pack-grid').innerHTML=Object.entries(destData.packing).map(([cat,items])=>`
+    <div class="pack-cat">
+      <div class="pcat-title" style="color:${pcColors[cat]||'#8B5CF6'};">${cat}</div>
+      <div class="pcat-items">${items.map(it=>`<div class="pcat-item">${it}</div>`).join('')}</div>
+    </div>`).join('');
+
+  /* Open first day, confetti */
+  toggleDay(0);
+  confetti();
+}
+
+function mkSlot(time,text,color){
+  return`<div class="slot-row">
+    <div class="slot-time">${time}</div>
+    <div class="slot-line">
+      <div class="slot-dot" style="background:${color};"></div>
+      <div class="slot-rail"></div>
+    </div>
+    <div class="slot-desc">${text}</div>
+  </div>`;
+}
+
+function toggleDay(i){
+  document.getElementById(`iday-${i}`).classList.toggle('open');
+}
+
+/* =====================================================
+   CONFETTI
+===================================================== */
+function confetti(){
+  const cols=['#FF6B6B','#FF9F43','#FFD93D','#10B981','#38BDF8','#8B5CF6','#F472B6'];
+  for(let i=0;i<90;i++){
+    const el=document.createElement('div');
+    el.className='cf-piece';
+    el.style.left=`${Math.random()*100}%`;
+    el.style.width=el.style.height=`${6+Math.random()*7}px`;
+    el.style.background=cols[Math.floor(Math.random()*cols.length)];
+    el.style.borderRadius=Math.random()>.5?'50%':'2px';
+    el.style.animationDuration=`${1.6+Math.random()*2.4}s`;
+    el.style.animationDelay=`${Math.random()*1.2}s`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),4500);
+  }
+}
+
+/* =====================================================
+   START / RESTART / SHARE
+===================================================== */
+function startQuiz(){
+  S.cur=0;
+  S.scores={ra:0,cn:0,di:0,lb:0,fa:0,sg:0};
+  S.maxP={ra:0,cn:0,di:0,lb:0,fa:0,sg:0};
+  S.answers=[];
+  show('quiz-screen');
+  buildSidebar();
+  displayQ();
+}
+
+function restartQuiz(){startQuiz();}
+
+function shareResult(){
+  const ranked=rankDests();
+  const d=DESTS.find(x=>x.id===ranked[0].id);
+  const txt=`🌍 My travel ideal type is ${d.name} ${d.emoji} (${Math.min(100,ranked[0].match)}% match)! Find yours at Travel Ideal Type World Cup ✈️`;
+  if(navigator.share){navigator.share({title:'Travel Ideal Type World Cup',text:txt,url:location.href});}
+  else if(navigator.clipboard){navigator.clipboard.writeText(txt).then(()=>alert('Result copied to clipboard! 📋'));}
+}
+
+/* =====================================================
+   INIT
+===================================================== */
+spawnParticles();
+</script>
+</body>
+</html>
