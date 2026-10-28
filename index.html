@@ -7,7 +7,7 @@
   <meta name="description" content="Discover your perfect travel destination through 10 fun A vs B rounds. Real itinerary, budget & packing list included!"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
 /* =============================================
@@ -22,22 +22,27 @@
   --violet:  #8B5CF6;
   --pink:    #F472B6;
   --mint:    #34D399;
-  --bg:      #F2F4FF;
+  --bg:      #07081A;
   --white:   #FFFFFF;
-  --dark:    #1A1A3E;
-  --text:    #2B2D5B;
-  --text2:   #6B6E9A;
-  --text3:   #A0A3C4;
-  --border:  #E2E4F0;
-  --shadow:  0 4px 24px rgba(43,45,91,0.08);
-  --shadowL: 0 12px 48px rgba(43,45,91,0.14);
+  --dark:    #E8EAFF;
+  --text:    #DDE0FF;
+  --text2:   #9499CC;
+  --text3:   #5A5E8A;
+  --border:  rgba(255,255,255,0.08);
+  --shadow:  0 4px 24px rgba(0,0,0,0.35);
+  --shadowL: 0 12px 48px rgba(0,0,0,0.55);
   --r:       16px;
   --r2:      24px;
-  --font:    'Outfit', sans-serif;
+  --font:    'Space Grotesk', sans-serif;
+  --font-head: 'Syne', sans-serif;
   /* card theme A (warm) */
   --ca1: #FF6B6B; --ca2: #FF9F43;
   /* card theme B (cool) */
   --cb1: #38BDF8; --cb2: #34D399;
+  /* glass card */
+  --glass-bg: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.09);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,0.45);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -48,10 +53,31 @@ body{
   min-height:100vh;
   overflow-x:hidden;
   line-height:1.6;
+  position:relative;
+}
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 0%, rgba(120,60,255,0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 90% 10%, rgba(255,80,120,0.16) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 70% at 50% 100%, rgba(20,180,220,0.14) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 70%, rgba(80,220,150,0.10) 0%, transparent 55%),
+    linear-gradient(135deg,#07081A 0%,#0D0E2A 40%,#080C1F 70%,#07081A 100%);
+}
+body::after{
+  content:'';
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    radial-gradient(circle,rgba(255,255,255,0.55) 1px,transparent 1px),
+    radial-gradient(circle,rgba(255,255,255,0.3) 1px,transparent 1px);
+  background-size:60px 60px,100px 100px;
+  background-position:0 0,30px 30px;
+  opacity:0.04;
 }
 ::-webkit-scrollbar{width:6px;}
-::-webkit-scrollbar-track{background:#E2E4F0;}
-::-webkit-scrollbar-thumb{background:#C0C3E0;border-radius:3px;}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.04);}
+::-webkit-scrollbar-thumb{background:rgba(139,92,246,0.5);border-radius:3px;}
 
 /* =============================================
    SHARED
@@ -83,27 +109,30 @@ body{
 .btn-ghost{
   display:inline-flex;align-items:center;gap:8px;
   padding:12px 28px;
-  background:var(--white);color:var(--text2);font-family:var(--font);
+  background:rgba(255,255,255,0.07);color:var(--text2);font-family:var(--font);
   font-size:.9rem;font-weight:600;
-  border:2px solid var(--border);border-radius:999px;cursor:pointer;
+  border:1.5px solid rgba(255,255,255,0.12);border-radius:999px;cursor:pointer;
   transition:all .2s ease;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
 }
-.btn-ghost:hover{border-color:#C0C3E0;color:var(--text);background:#F8F9FF;}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.25);color:var(--text);background:rgba(255,255,255,0.12);}
 
 /* =============================================
    BLOB BACKGROUNDS (decorative)
 ============================================= */
-.blobs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.blobs{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
 .blob{
-  position:absolute;border-radius:50%;filter:blur(80px);opacity:.45;
+  position:absolute;border-radius:50%;filter:blur(110px);opacity:.28;
   animation:blobDrift ease-in-out infinite alternate;
 }
-.blob-1{width:500px;height:500px;background:linear-gradient(135deg,#FFB3B3,#FFD8A8);top:-10%;left:-10%;animation-duration:12s;}
-.blob-2{width:400px;height:400px;background:linear-gradient(135deg,#BAE6FD,#A7F3D0);top:40%;right:-8%;animation-duration:15s;animation-delay:-5s;}
-.blob-3{width:350px;height:350px;background:linear-gradient(135deg,#DDD6FE,#FBCFE8);bottom:-5%;left:30%;animation-duration:18s;animation-delay:-8s;}
+.blob-1{width:700px;height:700px;background:linear-gradient(135deg,#7B2FFF,#C026D3);top:-20%;left:-15%;animation-duration:14s;}
+.blob-2{width:550px;height:550px;background:linear-gradient(135deg,#0EA5E9,#06B6D4);top:35%;right:-12%;animation-duration:17s;animation-delay:-6s;}
+.blob-3{width:500px;height:500px;background:linear-gradient(135deg,#F43F5E,#FB923C);bottom:-10%;left:25%;animation-duration:20s;animation-delay:-10s;}
+.blob-4{width:380px;height:380px;background:linear-gradient(135deg,#10B981,#38BDF8);top:55%;left:5%;animation-duration:22s;animation-delay:-4s;opacity:.18;}
 @keyframes blobDrift{
-  0%{transform:translate(0,0) scale(1);}
-  100%{transform:translate(30px,20px) scale(1.08);}
+  0%{transform:translate(0,0) scale(1) rotate(0deg);}
+  100%{transform:translate(40px,30px) scale(1.12) rotate(8deg);}
 }
 
 /* =============================================
@@ -131,6 +160,13 @@ body{
   position:relative;z-index:2;
   max-width:640px;width:100%;text-align:center;
   animation:riseUp .9s cubic-bezier(.22,1,.36,1) both;
+  background:rgba(255,255,255,0.03);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:32px;
+  padding:48px 40px;
+  box-shadow:0 32px 80px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.08);
 }
 @keyframes riseUp{
   from{opacity:0;transform:translateY(40px);}
@@ -151,24 +187,28 @@ body{
 .intro-globe{
   font-size:7rem;display:block;margin:0 auto 20px;
   animation:bobRotate 4s ease-in-out infinite;
-  filter:drop-shadow(0 8px 24px rgba(0,0,0,.12));
+  filter:drop-shadow(0 0 40px rgba(139,92,246,0.5)) drop-shadow(0 8px 24px rgba(0,0,0,.4));
 }
 @keyframes bobRotate{
   0%,100%{transform:translateY(0) rotate(-6deg);}
   50%{transform:translateY(-14px) rotate(6deg);}
 }
 .intro-headline{
-  font-size:clamp(2rem,6vw,3.6rem);
-  font-weight:900;line-height:1.1;margin-bottom:16px;
+  font-family:var(--font-head);
+  font-size:clamp(2rem,6vw,3.8rem);
+  font-weight:900;line-height:1.05;margin-bottom:16px;
+  letter-spacing:-0.02em;
 }
 .intro-headline span{
-  background:linear-gradient(135deg,#FF6B6B,#FF9F43,#FFD93D 60%,#10B981);
+  background:linear-gradient(135deg,#FF6B6B 0%,#FF9F43 35%,#FFD93D 60%,#34D399 85%,#38BDF8 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
+  filter:drop-shadow(0 0 32px rgba(255,107,107,0.4));
 }
 .intro-sub{
-  font-size:1.1rem;color:var(--text2);margin-bottom:36px;
+  font-size:1.05rem;color:var(--text2);margin-bottom:36px;
   max-width:480px;margin-left:auto;margin-right:auto;
+  line-height:1.7;letter-spacing:0.01em;
 }
 .intro-chips{
   display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
@@ -176,11 +216,16 @@ body{
 }
 .chip{
   display:flex;align-items:center;gap:6px;
-  padding:8px 16px;border-radius:999px;
-  background:var(--white);border:1px solid var(--border);
-  font-size:.82rem;font-weight:600;color:var(--text2);
-  box-shadow:var(--shadow);
+  padding:8px 18px;border-radius:999px;
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.12);
+  font-size:.8rem;font-weight:600;color:var(--text);
+  box-shadow:0 2px 12px rgba(0,0,0,0.3);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  transition:all .2s ease;
 }
+.chip:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2);transform:translateY(-1px);}
 .chip em{font-style:normal;font-size:1rem;}
 .intro-meta{
   margin-top:20px;font-size:.8rem;color:var(--text3);
@@ -193,9 +238,10 @@ body{
 #quiz-screen{min-height:100vh;padding-bottom:48px;}
 .quiz-nav{
   position:sticky;top:0;z-index:100;
-  background:rgba(255,255,255,.85);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
+  background:rgba(7,8,26,0.75);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(255,255,255,0.07);
   padding:12px 24px;
 }
 .qn-inner{
@@ -289,23 +335,25 @@ body{
 
 /* ---- CHOICE CARD ---- */
 .choice-card{
-  background:var(--white);
+  background:rgba(255,255,255,0.05);
   border-radius:28px;
   overflow:hidden;
-  border:2.5px solid var(--border);
+  border:1.5px solid rgba(255,255,255,0.1);
   cursor:pointer;
   transition:all .28s cubic-bezier(.4,0,.2,1);
   display:flex;flex-direction:column;
-  box-shadow:var(--shadow);
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
   user-select:none;
   position:relative;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
 }
 .choice-card:hover{
   transform:translateY(-8px);
   box-shadow:var(--shadowL);
 }
-.card-a:hover{border-color:rgba(255,107,107,.5);}
-.card-b:hover{border-color:rgba(56,189,248,.5);}
+.card-a:hover{border-color:rgba(255,107,107,.6);}
+.card-b:hover{border-color:rgba(56,189,248,.6);}
 
 .cc-top{
   padding:36px 24px 28px;
@@ -314,8 +362,8 @@ body{
   min-height:220px;
   justify-content:center;
 }
-.card-a .cc-top{background:linear-gradient(160deg,#FFF5F5,#FFF0E6,#FFFBEB);}
-.card-b .cc-top{background:linear-gradient(160deg,#EFF9FF,#F0FDF9,#F0FEFF);}
+.card-a .cc-top{background:linear-gradient(160deg,rgba(255,80,80,0.12),rgba(255,140,50,0.10),rgba(255,210,60,0.06));}
+.card-b .cc-top{background:linear-gradient(160deg,rgba(14,165,233,0.12),rgba(16,185,129,0.10),rgba(20,220,240,0.06));}
 
 /* Big letter badge */
 .cc-letter{
@@ -414,11 +462,13 @@ body{
 ============================================= */
 .quiz-sidebar{position:sticky;top:90px;}
 .sb-card{
-  background:var(--white);
-  border:1px solid var(--border);
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.09);
   border-radius:var(--r2);
   padding:24px;
-  box-shadow:var(--shadow);
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
 }
 .sb-header{margin-bottom:20px;}
 .sb-title{font-size:.95rem;font-weight:800;color:var(--dark);margin-bottom:3px;}
@@ -479,24 +529,33 @@ body{
   align-items:center;justify-content:center;
   padding:40px;text-align:center;
 }
-.load-wrap{max-width:420px;width:100%;position:relative;z-index:2;}
+.load-wrap{
+  max-width:420px;width:100%;position:relative;z-index:2;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:32px;padding:48px 36px;
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  box-shadow:0 32px 80px rgba(0,0,0,0.5);
+}
 .load-globe{
   font-size:5rem;display:block;margin-bottom:28px;
   animation:spinBig 1.8s linear infinite;
+  filter:drop-shadow(0 0 24px rgba(139,92,246,0.6));
 }
 @keyframes spinBig{
   from{transform:rotate(0deg);}
   to{transform:rotate(360deg);}
 }
-.load-h{font-size:1.6rem;font-weight:900;color:var(--dark);margin-bottom:8px;}
+.load-h{font-family:var(--font-head);font-size:1.6rem;font-weight:900;color:var(--dark);margin-bottom:8px;letter-spacing:-0.01em;}
 .load-s{font-size:.9rem;color:var(--text2);margin-bottom:32px;}
 .load-track{
-  height:8px;background:var(--border);
+  height:6px;background:rgba(255,255,255,0.08);
   border-radius:999px;overflow:hidden;margin-bottom:24px;
 }
 .load-fill{
   height:100%;
-  background:linear-gradient(90deg,#FF6B6B,#FF9F43,#FFD93D,#10B981,#38BDF8);
+  background:linear-gradient(90deg,#7B2FFF,#F43F5E,#FF9F43,#34D399,#38BDF8);
   background-size:200% 100%;
   animation:shimmerBar 1.5s linear infinite;
   border-radius:999px;width:0%;
@@ -506,13 +565,13 @@ body{
 .load-step{
   display:flex;align-items:center;gap:12px;
   padding:12px 16px;border-radius:14px;
-  background:var(--white);border:1px solid var(--border);
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);
   font-size:.83rem;color:var(--text3);
-  box-shadow:var(--shadow);transition:all .35s;
+  box-shadow:var(--glass-shadow);transition:all .35s;
 }
 .load-step.done{
-  color:var(--text);border-color:#A7F3D0;
-  background:linear-gradient(135deg,#F0FDF9,#FFFBEB);
+  color:var(--text);border-color:rgba(52,211,153,0.35);
+  background:rgba(52,211,153,0.07);
 }
 .ls-ic{font-size:1rem;}
 
@@ -535,9 +594,10 @@ body{
 .r-hero-overlay{
   position:absolute;inset:0;
   background:linear-gradient(to top,
-    rgba(26,26,62,1) 0%,
-    rgba(26,26,62,.6) 40%,
-    rgba(26,26,62,.15) 75%,
+    rgba(7,8,26,1) 0%,
+    rgba(7,8,26,.75) 35%,
+    rgba(7,8,26,.25) 65%,
+    rgba(7,8,26,.05) 85%,
     transparent 100%);
 }
 .r-hero-content{
@@ -554,9 +614,11 @@ body{
   text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;
 }
 .r-dest-name{
+  font-family:var(--font-head);
   font-size:clamp(2.4rem,7vw,5rem);
   font-weight:900;color:white;line-height:1;
-  text-shadow:0 4px 32px rgba(0,0,0,.4);
+  letter-spacing:-0.02em;
+  text-shadow:0 4px 48px rgba(0,0,0,.6),0 0 80px rgba(139,92,246,0.3);
 }
 .r-country-row{
   font-size:1.05rem;color:rgba(255,255,255,.75);
@@ -583,36 +645,42 @@ body{
 /* Results body */
 .r-body{max-width:960px;margin:0 auto;padding:48px 24px 0;display:grid;gap:48px;}
 .sec-title{
-  font-size:1.2rem;font-weight:800;color:var(--dark);
+  font-family:var(--font-head);
+  font-size:1.15rem;font-weight:800;color:var(--dark);
   display:flex;align-items:center;gap:10px;margin-bottom:20px;
+  letter-spacing:0.01em;
 }
 .sec-title-icon{font-size:1.3rem;}
 
 /* DNA grid */
 .dna-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
 .dna-card{
-  background:var(--white);border:1px solid var(--border);
+  background:var(--glass-bg);border:1px solid var(--glass-border);
   border-radius:var(--r);padding:16px;
-  box-shadow:var(--shadow);
+  box-shadow:var(--glass-shadow);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
 }
 .dna-labels{display:flex;justify-content:space-between;font-size:.7rem;color:var(--text2);font-weight:700;margin-bottom:7px;}
-.dna-track{height:8px;background:#EDF0FF;border-radius:999px;overflow:hidden;}
+.dna-track{height:8px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden;}
 .dna-fill{height:100%;border-radius:999px;}
 .dna-match-txt{font-size:.68rem;color:var(--text3);text-align:center;margin-top:5px;font-weight:600;}
 
 /* Alternative card */
 .alt-card{
-  background:var(--white);border:1px solid var(--border);
+  background:var(--glass-bg);border:1px solid var(--glass-border);
   border-radius:var(--r2);padding:24px;
   display:flex;align-items:center;gap:20px;
-  box-shadow:var(--shadow);transition:border-color .2s;
+  box-shadow:var(--glass-shadow);transition:all .2s;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
 }
-.alt-card:hover{border-color:#C7D2FE;}
+.alt-card:hover{border-color:rgba(139,92,246,0.4);transform:translateY(-2px);box-shadow:0 16px 48px rgba(0,0,0,0.6);}
 .alt-thumb{
   width:110px;height:110px;border-radius:20px;
   background-size:cover;background-position:center;
-  flex-shrink:0;border:3px solid white;
-  box-shadow:var(--shadow);
+  flex-shrink:0;border:2px solid rgba(255,255,255,0.12);
+  box-shadow:0 8px 24px rgba(0,0,0,0.5);
 }
 .alt-body{flex:1;}
 .alt-eyebrow{font-size:.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--text3);font-weight:700;margin-bottom:6px;}
@@ -629,9 +697,11 @@ body{
 
 /* Budget */
 .budget-wrap{
-  background:var(--white);border:1px solid var(--border);
+  background:var(--glass-bg);border:1px solid var(--glass-border);
   border-radius:var(--r2);padding:28px;
-  box-shadow:var(--shadow);
+  box-shadow:var(--glass-shadow);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
 }
 .budget-inner{display:grid;grid-template-columns:1fr 280px;gap:32px;align-items:center;}
 .budget-chart-wrap{position:relative;}
@@ -651,16 +721,18 @@ body{
 /* Itinerary */
 .itin-list{display:flex;flex-direction:column;gap:12px;}
 .itin-day{
-  background:var(--white);border:1px solid var(--border);
+  background:var(--glass-bg);border:1px solid var(--glass-border);
   border-radius:var(--r2);overflow:hidden;
-  box-shadow:var(--shadow);transition:border-color .2s;
+  box-shadow:var(--glass-shadow);transition:all .2s;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
 }
-.itin-day.open{border-color:#C7D2FE;}
+.itin-day.open{border-color:rgba(139,92,246,0.35);box-shadow:0 0 0 1px rgba(139,92,246,0.2),var(--glass-shadow);}
 .iday-header{
   padding:18px 24px;display:flex;align-items:center;gap:16px;
   cursor:pointer;transition:background .2s;
 }
-.iday-header:hover{background:#F8F9FF;}
+.iday-header:hover{background:rgba(255,255,255,0.05);}
 .iday-num{
   width:44px;height:44px;border-radius:14px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
@@ -695,9 +767,11 @@ body{
 /* Tips */
 .tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .tip-card{
-  background:var(--white);border:1px solid var(--border);
+  background:var(--glass-bg);border:1px solid var(--glass-border);
   border-radius:var(--r);padding:16px;
-  display:flex;gap:12px;box-shadow:var(--shadow);
+  display:flex;gap:12px;box-shadow:var(--glass-shadow);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
 }
 .tip-icon{font-size:1.2rem;flex-shrink:0;}
 .tip-txt{font-size:.82rem;color:var(--text2);line-height:1.55;}
@@ -705,10 +779,13 @@ body{
 /* Packing */
 .pack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
 .pack-cat{
-  background:var(--white);border:1px solid var(--border);
-  border-radius:var(--r);padding:18px;box-shadow:var(--shadow);
+  background:var(--glass-bg);border:1px solid var(--glass-border);
+  border-radius:var(--r);padding:18px;box-shadow:var(--glass-shadow);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
 }
 .pcat-title{
+  font-family:var(--font-head);
   font-size:.88rem;font-weight:800;margin-bottom:12px;
   display:flex;align-items:center;gap:6px;
 }
@@ -716,13 +793,41 @@ body{
 .pcat-item{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--text2);}
 .pcat-item::before{
   content:'✓';font-size:.68rem;font-weight:800;
-  color:#10B981;flex-shrink:0;
+  color:#34D399;flex-shrink:0;
 }
 
 /* Results footer */
 .r-footer{
   display:flex;justify-content:center;gap:16px;
   margin-top:48px;flex-wrap:wrap;
+}
+
+/* =============================================
+   LANG TOGGLE BUTTON
+============================================= */
+.lang-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 16px;border-radius:999px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.15);
+  color:var(--text);font-family:var(--font);
+  font-size:.78rem;font-weight:700;
+  cursor:pointer;transition:all .2s ease;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  white-space:nowrap;
+  letter-spacing:.3px;
+}
+.lang-btn:hover{
+  background:rgba(139,92,246,0.25);
+  border-color:rgba(139,92,246,0.5);
+  color:#C4B5FD;
+  transform:translateY(-1px);
+}
+.lang-btn.active-ko{
+  background:rgba(244,63,94,0.2);
+  border-color:rgba(244,63,94,0.45);
+  color:#FDA4AF;
 }
 
 /* =============================================
@@ -777,6 +882,7 @@ body{
   <div class="blob blob-1"></div>
   <div class="blob blob-2"></div>
   <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
 </div>
 <!-- Floating emoji particles -->
 <div id="ptcl" style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;"></div>
@@ -789,30 +895,31 @@ body{
     <div class="intro-logo-row">
       <div class="intro-logo-icon">✈️</div>
       <span class="intro-logo-text">TravelIQ · World Cup Edition</span>
+      <button class="lang-btn" id="intro-lang-toggle" onclick="toggleLang()" title="언어 전환">🇰🇷 한국어</button>
     </div>
 
     <span class="intro-globe">🌍</span>
 
     <h1 class="intro-headline">
-      <span>Travel Ideal Type<br>World Cup</span>
+      <span data-i18n="intro_title">Travel Ideal Type<br>World Cup</span>
     </h1>
-    <p class="intro-sub">
+    <p class="intro-sub" data-i18n="intro_sub">
       10 A vs B rounds → AI matches you to your <em>perfect</em> destination with a real budget, full 7-day itinerary &amp; packing list.
     </p>
 
     <div class="intro-chips">
-      <div class="chip"><em>🎯</em> Personalized match</div>
-      <div class="chip"><em>💰</em> Real budget data</div>
-      <div class="chip"><em>🗓️</em> 7-day itinerary</div>
-      <div class="chip"><em>🧳</em> Packing list</div>
-      <div class="chip"><em>🌏</em> 12 destinations</div>
+      <div class="chip"><em>🎯</em> <span data-i18n="chip1">Personalized match</span></div>
+      <div class="chip"><em>💰</em> <span data-i18n="chip2">Real budget data</span></div>
+      <div class="chip"><em>🗓️</em> <span data-i18n="chip3">7-day itinerary</span></div>
+      <div class="chip"><em>🧳</em> <span data-i18n="chip4">Packing list</span></div>
+      <div class="chip"><em>🌏</em> <span data-i18n="chip5">12 destinations</span></div>
     </div>
 
-    <button class="btn-main" onclick="startQuiz()" id="start-btn">
+    <button class="btn-main" onclick="startQuiz()" id="start-btn" data-i18n="btn_start">
       ✈️ Start My Journey →
     </button>
 
-    <p class="intro-meta">
+    <p class="intro-meta" data-i18n="intro_meta">
       <b>10 rounds</b> · ~3 minutes · completely free
     </p>
   </div>
@@ -839,6 +946,7 @@ body{
         </div>
       </div>
       <div class="qn-round" id="qn-round">1 / 10</div>
+      <button class="lang-btn" id="lang-toggle" onclick="toggleLang()" title="언어 전환">🇰🇷 한국어</button>
     </div>
   </nav>
 
@@ -898,7 +1006,7 @@ body{
 
       <!-- Skip -->
       <div class="skip-wrap">
-        <button class="skip-btn" onclick="pickChoice('skip')">😅 Can't decide? Skip this one</button>
+        <button class="skip-btn" onclick="pickChoice('skip')" data-i18n="btn_skip">😅 Can't decide? Skip this one</button>
       </div>
     </div>
 
@@ -906,17 +1014,17 @@ body{
     <aside class="quiz-sidebar">
       <div class="sb-card">
         <div class="sb-header">
-          <div class="sb-title">🧠 Your Travel DNA</div>
-          <div class="sb-sub">Live analysis · updates after each choice</div>
+          <div class="sb-title" data-i18n="sb_title">🧠 Your Travel DNA</div>
+          <div class="sb-sub" data-i18n="sb_sub">Live analysis · updates after each choice</div>
         </div>
         <div id="axes-wrap"></div>
         <div class="sb-divider"></div>
         <div class="sb-tip-box">
           <div class="sb-tip-icon">💡</div>
-          <div class="sb-tip-txt" id="sb-tip">Make your first choice to unlock your travel personality!</div>
+          <div class="sb-tip-txt" id="sb-tip" data-i18n="sb_tip_init">Make your first choice to unlock your travel personality!</div>
         </div>
         <div class="dest-preview-box" id="dest-preview-box">
-          <div class="dpb-label">🔮 Current frontrunner</div>
+          <div class="dpb-label" data-i18n="dpb_label">🔮 Current frontrunner</div>
           <span class="dpb-emoji" id="dpb-emoji">🌍</span>
           <div class="dpb-name" id="dpb-name">—</div>
         </div>
@@ -931,16 +1039,16 @@ body{
 <div id="loading-screen" class="screen">
   <div class="load-wrap">
     <span class="load-globe">🌍</span>
-    <h2 class="load-h">Analyzing your travel DNA…</h2>
-    <p class="load-s">Finding your perfect destination out of 12 options</p>
+    <h2 class="load-h" data-i18n="load_h">Analyzing your travel DNA…</h2>
+    <p class="load-s" data-i18n="load_s">Finding your perfect destination out of 12 options</p>
     <div class="load-track">
       <div class="load-fill" id="load-fill"></div>
     </div>
     <div class="load-steps">
-      <div class="load-step" id="ls-0"><span class="ls-ic">⏳</span> Processing your preferences…</div>
-      <div class="load-step" id="ls-1"><span class="ls-ic">⏳</span> Scanning 12 destinations…</div>
-      <div class="load-step" id="ls-2"><span class="ls-ic">⏳</span> Crunching 7-day budget…</div>
-      <div class="load-step" id="ls-3"><span class="ls-ic">⏳</span> Crafting your itinerary…</div>
+      <div class="load-step" id="ls-0"><span class="ls-ic">⏳</span> <span data-i18n="ls0">Processing your preferences…</span></div>
+      <div class="load-step" id="ls-1"><span class="ls-ic">⏳</span> <span data-i18n="ls1">Scanning 12 destinations…</span></div>
+      <div class="load-step" id="ls-2"><span class="ls-ic">⏳</span> <span data-i18n="ls2">Crunching 7-day budget…</span></div>
+      <div class="load-step" id="ls-3"><span class="ls-ic">⏳</span> <span data-i18n="ls3">Crafting your itinerary…</span></div>
     </div>
   </div>
 </div>
@@ -954,12 +1062,12 @@ body{
     <div class="r-hero-img" id="r-img"></div>
     <div class="r-hero-overlay"></div>
     <div class="r-hero-content">
-      <div class="r-trophy-badge">🏆 Your Perfect Match</div>
+      <div class="r-trophy-badge" data-i18n="r_trophy">🏆 Your Perfect Match</div>
       <div class="r-dest-name" id="r-name">Bali</div>
       <div class="r-country-row" id="r-country">🇮🇩 Indonesia · Southeast Asia</div>
       <div class="r-tagline" id="r-tagline">"Where gods bathe in firelight and rice terraces dream in green."</div>
       <div class="r-match-row">
-        <span class="r-match-label">Match score:</span>
+        <span class="r-match-label" data-i18n="r_match_label">Match score:</span>
         <div class="r-match-bar">
           <div class="r-match-bar-fill" id="r-match-fill" style="width:0%"></div>
         </div>
@@ -973,17 +1081,17 @@ body{
 
     <!-- DNA -->
     <section>
-      <div class="sec-title"><span class="sec-title-icon">🧬</span>Your Travel DNA vs Destination Profile</div>
+      <div class="sec-title"><span class="sec-title-icon">🧬</span><span data-i18n="sec_dna">Your Travel DNA vs Destination Profile</span></div>
       <div class="dna-grid" id="dna-grid"></div>
     </section>
 
     <!-- Alternative -->
     <section>
-      <div class="sec-title"><span class="sec-title-icon">🗺️</span>Also Consider…</div>
+      <div class="sec-title"><span class="sec-title-icon">🗺️</span><span data-i18n="sec_alt">Also Consider…</span></div>
       <div class="alt-card">
         <div class="alt-thumb" id="alt-thumb"></div>
         <div class="alt-body">
-          <div class="alt-eyebrow">✨ Runner-up Destination</div>
+          <div class="alt-eyebrow" data-i18n="alt_eyebrow">✨ Runner-up Destination</div>
           <div class="alt-name" id="alt-name">Tokyo</div>
           <div class="alt-country" id="alt-country">🇯🇵 Japan</div>
           <div class="alt-line" id="alt-line">A perfect blend of traditions and futurism.</div>
@@ -994,14 +1102,14 @@ body{
 
     <!-- Budget -->
     <section>
-      <div class="sec-title"><span class="sec-title-icon">💰</span>Budget Breakdown · 7 Days / Person</div>
+      <div class="sec-title"><span class="sec-title-icon">💰</span><span data-i18n="sec_budget">Budget Breakdown · 7 Days / Person</span></div>
       <div class="budget-wrap">
         <div class="budget-inner">
           <div class="budget-chart-wrap">
             <canvas id="budget-chart" height="260"></canvas>
             <div class="budget-center-label">
               <div class="bcl-total" id="r-total">$0</div>
-              <div class="bcl-label">total est.</div>
+              <div class="bcl-label" data-i18n="bcl_label">total est.</div>
             </div>
           </div>
           <div class="blist" id="blist"></div>
@@ -1011,26 +1119,26 @@ body{
 
     <!-- Itinerary -->
     <section>
-      <div class="sec-title"><span class="sec-title-icon">🗓️</span>7-Day Itinerary</div>
+      <div class="sec-title"><span class="sec-title-icon">🗓️</span><span data-i18n="sec_itin">7-Day Itinerary</span></div>
       <div class="itin-list" id="itin-list"></div>
     </section>
 
     <!-- Tips -->
     <section>
-      <div class="sec-title"><span class="sec-title-icon">💡</span>Insider Tips</div>
+      <div class="sec-title"><span class="sec-title-icon">💡</span><span data-i18n="sec_tips">Insider Tips</span></div>
       <div class="tips-grid" id="tips-grid"></div>
     </section>
 
     <!-- Packing -->
     <section>
-      <div class="sec-title"><span class="sec-title-icon">🧳</span>Packing List</div>
+      <div class="sec-title"><span class="sec-title-icon">🧳</span><span data-i18n="sec_pack">Packing List</span></div>
       <div class="pack-grid" id="pack-grid"></div>
     </section>
 
     <!-- Footer -->
     <div class="r-footer">
-      <button class="btn-main" onclick="restartQuiz()">🔄 Retake the Quiz</button>
-      <button class="btn-ghost" onclick="shareResult()">📤 Share My Result</button>
+      <button class="btn-main" onclick="restartQuiz()" data-i18n="btn_retake">🔄 Retake the Quiz</button>
+      <button class="btn-ghost" onclick="shareResult()" data-i18n="btn_share">📤 Share My Result</button>
     </div>
   </div>
 </div>
@@ -1709,6 +1817,201 @@ function shareResult(){
    INIT
 ===================================================== */
 spawnParticles();
+
+/* =====================================================
+   i18n 시스템
+===================================================== */
+let LANG = 'en';
+
+const TRANSLATIONS = {
+  en: {
+    intro_title: 'Travel Ideal Type<br>World Cup',
+    intro_sub: '10 A vs B rounds → AI matches you to your <em>perfect</em> destination with a real budget, full 7-day itinerary &amp; packing list.',
+    chip1:'Personalized match', chip2:'Real budget data', chip3:'7-day itinerary', chip4:'Packing list', chip5:'12 destinations',
+    btn_start: '✈️ Start My Journey →',
+    intro_meta: '<b>10 rounds</b> · ~3 minutes · completely free',
+    btn_skip: "😅 Can't decide? Skip this one",
+    sb_title: '🧠 Your Travel DNA',
+    sb_sub: 'Live analysis · updates after each choice',
+    sb_tip_init: 'Make your first choice to unlock your travel personality!',
+    dpb_label: '🔮 Current frontrunner',
+    load_h: 'Analyzing your travel DNA…',
+    load_s: 'Finding your perfect destination out of 12 options',
+    ls0: 'Processing your preferences…',
+    ls1: 'Scanning 12 destinations…',
+    ls2: 'Crunching 7-day budget…',
+    ls3: 'Crafting your itinerary…',
+    r_trophy: '🏆 Your Perfect Match',
+    r_match_label: 'Match score:',
+    sec_dna: 'Your Travel DNA vs Destination Profile',
+    sec_alt: 'Also Consider…',
+    alt_eyebrow: '✨ Runner-up Destination',
+    sec_budget: 'Budget Breakdown · 7 Days / Person',
+    bcl_label: 'total est.',
+    sec_itin: '7-Day Itinerary',
+    sec_tips: 'Insider Tips',
+    sec_pack: 'Packing List',
+    btn_retake: '🔄 Retake the Quiz',
+    btn_share: '📤 Share My Result',
+    lang_btn: '🇰🇷 한국어',
+    iday_sub: 'Morning · Afternoon · Evening',
+    tips_a:['You\'re leaning relaxation 🧘!','City vibes call you 🏙️.','You prefer going all out 💎.','Foodie at heart 🍜 — noted!','Independent soul 🧘, classic.'],
+    tips_b:['You\'re leaning adventure 🏃!','Nature is your home 🌿.','You prefer traveling smart 🎒.','Activities over appetizers 🪢 — noted!','Social butterfly 🥂, classic.']
+  },
+  ko: {
+    intro_title: '여행 이상형<br>월드컵',
+    intro_sub: 'A vs B 라운드 10단께 → 나만의 <em>완벽한</em> 여행지를 AI가 매칭해 드립니다. 실제 예산과 7일 일정표는 기본!',
+    chip1:'맞츢형 매칭', chip2:'실제 예산 데이터', chip3:'7일 일정표', chip4:'집데가지 리스트', chip5:'12개 여행지',
+    btn_start: '✈️ 여행 시작하기 →',
+    intro_meta: '<b>10라운드</b> · 약 3분 · 완전 무료',
+    btn_skip: '😅 고르기 어려워요? 스킵하기',
+    sb_title: '🧠 나의 여행 DNA',
+    sb_sub: '실시간 분석 · 선택할 때마다 업데이트',
+    sb_tip_init: '첫 번째 선택을 해서 여행 성향을 확인하세요!',
+    dpb_label: '🔮 현재 1위 방국',
+    load_h: '여행 DNA를 분석 중…',
+    load_s: '12개 여행지 중 나의 컞 매칭지를 찾는 중',
+    ls0: '선호도 처리 중…',
+    ls1: '12개 여행지 스캔 중…',
+    ls2: '7일 예산 계산 중…',
+    ls3: '일정표 작성 중…',
+    r_trophy: '🏆 나의 컞 여행지',
+    r_match_label: '매칭 점수:',
+    sec_dna: '나의 여행 DNA vs 여행지 프로필',
+    sec_alt: '이런 곳도 어때요…',
+    alt_eyebrow: '✨ 2위 누락리지 여행지',
+    sec_budget: '예산 내역 · 7일 / 1인',
+    bcl_label: '예상 합계',
+    sec_itin: '7일 여행 일정표',
+    sec_tips: '현지 인사이더 팁',
+    sec_pack: '집데가기 체크리스트',
+    btn_retake: '🔄 다시 하기',
+    btn_share: '📤 결과 공유',
+    lang_btn: '🇬🇧 English',
+    iday_sub: '오전 · 오후 · 저녁',
+    tips_a:['저는 휴식 여행 타입 하이에요 🧘!','도시 감성이 콜림하시는군요 🏙️.','하루하루를 늘리겠다! 럭셔리 타입 💎.','미식가 기질이 다분하시다요 🍜.','자유로운 솔로 여행자! 🧘'],
+    tips_b:['엘리트 모험 여행자 🏃!','대자연 에너지가 컭이네요 🌿.','알엝c하게 백팩 여행! 🎒','액티비티가 업 🪢!','파티형 단체 여행자! 🥂']
+  }
+};
+
+const QUESTIONS_KO = [
+  {id:1, cat:'🌿 환경', text:'나의 드림 휴가는 어디서 시작할까?',
+   a:{emoji:'🏖️',title:'백사장 노을 해변',desc:'발가락 사이로 퍼지는 모래, 파도 소리, 씨인 칵테일 한 잔.',tags:['휴양','트로피칼','풍경좋은']},
+   b:{emoji:'🏔️',title:'안개 속 산낙',desc:'상쾾한 산만 공기, 웘독한 산링, 줄기는 등산의 전율.',tags:['모험','자연','액티비티']}},
+  {id:2, cat:'🏙 세팅', text:'체크인 후 제일 먼저 향하는 곳은?',
+   a:{emoji:'🏙️',title:'네온 도시 스카이라인',desc:'루프탑 바, 스트리트 아트, 박물관, 세계급 레스토랑.',tags:['도시','사교적','활기찼']},
+   b:{emoji:'🌿',title:'외진 시골이나 스릴로',desc:'구롱구링한 언덕, 숨은 폭포, 교통대신 새 소리.',tags:['평화롭다','자연','한적하다']}},
+  {id:3, cat:'✈️ 거리', text:'비행기 탄담 시간은?',
+   a:{emoji:'🏡',title:'근거리 여행지',desc:'장거리 비행기 없이도 둘러볼 만한 숨경진 보석',tags:['심플하게','저렴하게','친숙하다']},
+   b:{emoji:'✈️',title:'지구 반대편으로',desc:'12시간 비행기를 타고 완전히 다른 세계로 접속',tags:['엑존틱','이국적인','새로운 문화']}},
+  {id:4, cat:'🛏 숙소', text:'나의 이상적인 숙소는?',
+   a:{emoji:'🏰',title:'5성급 럭셔리 리조트',desc:'프라이빗 풀 빌라, 버틀러 서비스, 실크 가운, 연량 샴페인',tags:['프리미엄','파알서는','호가스럽다']},
+   b:{emoji:'🎒',title:'백팩커 호스텔',desc:'도미토리, 해먽, 에어비앤비 주거 — 올아서 더 많은 경험',tags:['저렴',''사교적','자유롭다']}},
+  {id:5, cat:'🍜 틹별한 경험', text:'행복한 하루는 이런 것으로 가득 찼앉니다',
+   a:{emoji:'🍜',title:'스�스케일 미식 탈험',desc:'시장 투어, 앤츠 식당, 푸드 투어 — 싹으로 돌아다니며 먹기',tags:['궁둥월','진짜','로컴']},
+   b:{emoji:'🪢',title:'순수 아드레날린',desc:'스카이다이빙, 래프팅, 클리프 다이빙 — 심장이 톱톱 튀수록',tags:['떨림스러워','액티비티','아울리서']}},
+  {id:6, cat:'👥 동행', text:'나의 여행 몔버는?',
+   a:{emoji:'🧘',title:'혼자만의 시간',desc:'완전한 자유 — c30고프면 먹고, 마대로 계획 뜨고, 타협 제로',tags:['독립적','시간 자유','자유롭다']},
+   b:{emoji:'🥂',title:'웃음 가득한 팀 여행',desc:'함께하는 추억, 단체 셀카, 안에서만 통하는 농담, 더치는 식대',tags:['사교적','즐거운','연결']}},
+  {id:7, cat:'🌞 페이스', text:'나의 이상적인 휴가 분위기는?',
+   a:{emoji:'🧖',title:'스파 & 슬로우 트래블',desc:'웰럼니스 리트릿, 노을 때 일기쓰기, 두 시간짜리 점심, 알람 없는 아침',tags:['품는','마음외','솦주']},
+   b:{emoji:'🎉',title:'나이트라이프 & 높는 에너지',desc:'새벽 4시까지 당스에, 일출 구경, 다시 시작. FOMO는 라이프스타일',tags:['포왜','에너지 넘침','사교적']}},
+  {id:8, cat:'🗺 활동', text:'자유 시간이 주어진다면?',
+   a:{emoji:'🖼️',title:'박물관 & 문화',desc:'고대 예술, 지역 역사, 건축, 숨은 서점 속에',tags:['지적','문화적','실내']},
+   b:{emoji:'🤿',title:'다이빙 & 서핑',desc:'파뗄 타기, 평사 산호, 카약 — 다음 바다 스릴 콰',tags:['액티비티','샨너지','면역']}}  ,
+  {id:9, cat:'💳 소비', text:'휴가지 레스토랑에서는?',
+   a:{emoji:'🍷',title:'파인 다이닝에만',desc:'테이스팅 메뉴, 와인 페어링, 캐들 춴정 테이블 — 불동의 미미럴한 식사',tags:['럭셔리','큰레이티드','호가스럽다']},
+   b:{emoji:'🥙',title:'스트리트 푸드에만',desc:'현지인 따라가기, 콰에서 먹기, 플라스틱 의자에 않아 $2 맛집',tags:['진짜','저렴','현지 굸']}},
+  {id:10, cat:'🧭 스타일', text:'당신의 여행 포맷은?',
+   a:{emoji:'🐢',title:'딕다이브 (2곳 이하)',desc:'한 도시를 제대로 탐먹기, 현지인이 되어 돌아다니기',tags:['집중탐구','캐쨼','현지인만큼']},
+   b:{emoji:'🚀',title:'FOMO 모드 (6개이상)',desc:'이틀에 한 도시씩, 매시간 최대화, 잠은 오류',tags:['엄청난 속도','다양한','야망찬']}}
+];
+
+function toggleLang() {
+  LANG = LANG === 'en' ? 'ko' : 'en';
+  applyLang();
+  if (typeof displayQ === 'function' && typeof S !== 'undefined' && document.getElementById('quiz-screen').classList.contains('active')) {
+    displayQ();
+  }
+}
+
+function applyLang() {
+  const T = TRANSLATIONS[LANG];
+
+  /* 언어 버튼 텍스트 */
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.textContent = T.lang_btn;
+    if (LANG === 'ko') btn.classList.add('active-ko');
+    else btn.classList.remove('active-ko');
+  });
+
+  /* data-i18n 속성 가진 요소 */
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (T[key] !== undefined) el.innerHTML = T[key];
+  });
+
+  /* 사이드바 상단 팁 (sb-tip은 자동 업데이트 를 위해 세팅만 업데이트) */
+  const tipEl = document.getElementById('sb-tip');
+  if (tipEl && tipEl.getAttribute('data-i18n') === 'sb_tip_init') {
+    tipEl.textContent = T.sb_tip_init;
+  }
+
+  /* 앞으로의 떠늘 텍스트 시티업 (iday_sub 등) */
+  document.querySelectorAll('.iday-sub').forEach(el => el.textContent = T.iday_sub);
+}
+
+/* updateSidebar 팁 메시지 한국어 지원 */
+const _origUpdateSidebar = updateSidebar;
+updateSidebar = function() {
+  _origUpdateSidebar();
+  if (LANG === 'ko') {
+    const T = TRANSLATIONS.ko;
+    const tipEl = document.getElementById('sb-tip');
+    if (tipEl && S.cur >= 3) {
+      const scoreKeys = Object.values(S.scores);
+      const tips = [
+        S.scores.ra < 0 ? T.tips_a[0] : T.tips_b[0],
+        S.scores.cn < 0 ? T.tips_a[1] : T.tips_b[1],
+        S.scores.lb < 0 ? T.tips_a[2] : T.tips_b[2],
+        S.scores.fa < 0 ? T.tips_a[3] : T.tips_b[3],
+        S.scores.sg < 0 ? T.tips_a[4] : T.tips_b[4],
+      ];
+      tipEl.textContent = tips[(S.cur - 3) % tips.length];
+    }
+  }
+};
+
+/* displayQ 한국어 지원 래핑 */
+const _origDisplayQ = displayQ;
+displayQ = function() {
+  if (LANG === 'ko') {
+    const q = QUESTIONS_KO[S.cur];
+    if (!q) { _origDisplayQ(); return; }
+    document.getElementById('qn-label').textContent = `라운드 ${S.cur+1} / ${QUESTIONS_KO.length}`;
+    document.getElementById('qn-pct').textContent = `${Math.round((S.cur/QUESTIONS_KO.length)*100)}%`;
+    document.getElementById('qn-round').textContent = `${S.cur+1} / ${QUESTIONS_KO.length}`;
+    document.getElementById('qn-fill').style.width = `${Math.round((S.cur/QUESTIONS_KO.length)*100)}%`;
+    document.getElementById('q-cat').textContent = q.cat;
+    document.getElementById('q-text').textContent = q.text;
+    document.getElementById('emoji-a').textContent = q.a.emoji;
+    document.getElementById('title-a').textContent = q.a.title;
+    document.getElementById('desc-a').textContent = q.a.desc;
+    document.getElementById('tags-a').innerHTML = q.a.tags.map(t=>`<span class="cc-tag">${t}</span>`).join('');
+    document.getElementById('emoji-b').textContent = q.b.emoji;
+    document.getElementById('title-b').textContent = q.b.title;
+    document.getElementById('desc-b').textContent = q.b.desc;
+    document.getElementById('tags-b').innerHTML = q.b.tags.map(t=>`<span class="cc-tag">${t}</span>`).join('');
+    const ca = document.getElementById('card-a');
+    const cb = document.getElementById('card-b');
+    [ca,cb].forEach(c=>{c.classList.remove('winner','dimmed','slide-in');});
+    ca.style.pointerEvents=''; cb.style.pointerEvents='';
+    void ca.offsetWidth;
+    ca.classList.add('slide-in'); cb.classList.add('slide-in');
+  } else {
+    _origDisplayQ();
+  }
+};
 </script>
 </body>
 </html>
